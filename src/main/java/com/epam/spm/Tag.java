@@ -27,4 +27,12 @@ public class Tag {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "tag_id=" + tag_id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

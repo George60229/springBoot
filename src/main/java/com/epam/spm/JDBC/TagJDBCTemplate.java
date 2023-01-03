@@ -1,5 +1,9 @@
-package com.epam.spm;
+package com.epam.spm.JDBC;
 
+
+import com.epam.spm.EntityDAO;
+import com.epam.spm.Tag;
+import com.epam.spm.mapper.TagMapper;
 
 import java.util.List;
 

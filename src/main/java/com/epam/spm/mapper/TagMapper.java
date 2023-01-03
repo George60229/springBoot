@@ -1,5 +1,6 @@
-package com.epam.spm;
+package com.epam.spm.mapper;
 
+import com.epam.spm.Tag;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

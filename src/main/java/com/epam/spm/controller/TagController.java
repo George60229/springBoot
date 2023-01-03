@@ -1,6 +1,8 @@
-package com.epam.spm;
+package com.epam.spm.controller;
 
 
+import com.epam.spm.JDBC.TagJDBCTemplate;
+import com.epam.spm.Tag;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
