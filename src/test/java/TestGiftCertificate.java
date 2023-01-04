@@ -1,5 +1,6 @@
 
-import com.epam.spm.Gift_certificate;
+import com.epam.spm.model.GiftCertificate;
+
 import com.epam.spm.JDBC.CertificatesJDBCTemplate;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +10,7 @@ import javax.sql.DataSource;
 
 import java.sql.Date;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class TestGiftCertificate {
     DataSource dataSource;
@@ -26,18 +27,21 @@ public class TestGiftCertificate {
         CertificatesJDBCTemplate certificatesJDBCTemplate = new CertificatesJDBCTemplate();
         certificatesJDBCTemplate.setDataSource(dataSource);
         context.close();
-
-        certificatesJDBCTemplate.create("test_from_hear", 200);
-        Gift_certificate certificate = certificatesJDBCTemplate.getEntityByName("test_from_hear");
+        GiftCertificate newCertificate = new GiftCertificate();
+        newCertificate.setName("test_from_hear");
+        newCertificate.setPrice(200);
+        certificatesJDBCTemplate.create(newCertificate);
+        GiftCertificate certificate = certificatesJDBCTemplate.getEntityByName("test_from_hear");
 
         assertEquals("test_from_hear", certificate.getName());
         assertEquals(200, certificate.getPrice());
-        certificatesJDBCTemplate.deleteById(certificate.getId());
+        assertTrue(certificatesJDBCTemplate.deleteByName("test_from_hear"));
+
     }
 
     @Test
     public void testGetSet() {
-        Gift_certificate certificate = new Gift_certificate();
+        GiftCertificate certificate = new GiftCertificate();
         certificate.setName("Tested");
         certificate.setDuration(1000);
         certificate.setDescription("It is amazing");

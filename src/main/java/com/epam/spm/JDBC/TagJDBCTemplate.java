@@ -2,7 +2,7 @@ package com.epam.spm.JDBC;
 
 
 import com.epam.spm.EntityDAO;
-import com.epam.spm.Tag;
+import com.epam.spm.model.Tag;
 import com.epam.spm.mapper.TagMapper;
 
 import java.util.List;
@@ -31,8 +31,14 @@ public class TagJDBCTemplate extends AbstractJDBCTemplate implements EntityDAO<T
     }
 
     @Override
-    public void deleteById(Integer id) {
-        String SQL = "delete from certificates where certificate_id=" + id;
-        jdbcTemplateObject.update(SQL);
+    public boolean deleteById(Integer id) {
+        String SQL = "delete from tages where tag_id=" + id;
+        return jdbcTemplateObject.update(SQL)>0;
+    }
+
+@Override
+    public boolean deleteByName(String name) {
+        String SQL = "delete from tages where name='" + name+"'";
+        return jdbcTemplateObject.update(SQL)>0;
     }
 }

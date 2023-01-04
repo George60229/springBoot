@@ -2,7 +2,7 @@ package com.epam.spm.controller;
 
 
 import com.epam.spm.JDBC.TagJDBCTemplate;
-import com.epam.spm.Tag;
+import com.epam.spm.model.Tag;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +26,7 @@ public class TagController {
     }
 
     @PostMapping("/addTag")
-    public void addTag(String name) {
+    public void addTag(@RequestParam String name) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         DataSource dataSource = context.getBean("dataSource", DataSource.class);
         TagJDBCTemplate tagJDBCTemplate = new TagJDBCTemplate();

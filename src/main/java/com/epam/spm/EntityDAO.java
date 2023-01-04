@@ -12,5 +12,7 @@ public interface EntityDAO<E> {
 
     public List<E> listItems();
 
-    public void deleteById(Integer id);
+    public boolean deleteById(Integer id);
+
+    public boolean deleteByName(String name);
 }

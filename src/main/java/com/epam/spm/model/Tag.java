@@ -1,4 +1,4 @@
-package com.epam.spm;
+package com.epam.spm.model;
 
 import org.springframework.stereotype.Component;
 

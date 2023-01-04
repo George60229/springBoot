@@ -1,7 +1,5 @@
-import com.epam.spm.Gift_certificate;
-import com.epam.spm.JDBC.CertificatesJDBCTemplate;
 import com.epam.spm.JDBC.TagJDBCTemplate;
-import com.epam.spm.Tag;
+import com.epam.spm.model.Tag;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -10,6 +8,7 @@ import javax.sql.DataSource;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestTag {
     DataSource dataSource;
@@ -30,16 +29,14 @@ public class TestTag {
         tagJDBCTemplate.create("tested_tag");
         Tag tag = tagJDBCTemplate.getEntityByName("tested_tag");
         assertEquals("tested_tag", tag.getName());
-        tagJDBCTemplate.deleteById(tag.getId());
+        assertTrue(tagJDBCTemplate.deleteByName("tested_tag"));
     }
 
     @Test
     public void testGetSet() {
-        Tag tag=new Tag();
+        Tag tag = new Tag();
         tag.setName("ALALAL");
-
-        assertEquals("ALALAL",tag.getName());
-
+        assertEquals("ALALAL", tag.getName());
 
     }
 }

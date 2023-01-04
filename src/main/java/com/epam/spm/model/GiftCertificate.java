@@ -1,4 +1,4 @@
-package com.epam.spm;
+package com.epam.spm.model;
 
 import org.springframework.stereotype.Component;
 
@@ -6,7 +6,7 @@ import java.sql.Date;
 
 
 @Component("giftCertificate")
-public class Gift_certificate {
+public class GiftCertificate {
 
 
     private Integer certificate_id;
@@ -79,7 +79,6 @@ public class Gift_certificate {
     @Override
     public String toString() {
         return "Gift_certificate{" +
-                "certificate_id=" + certificate_id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
