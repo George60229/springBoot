@@ -1,4 +1,4 @@
-package com.epam.spm.JDBC;
+package com.epam.spm.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 

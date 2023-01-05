@@ -1,4 +1,4 @@
-import com.epam.spm.JDBC.TagJDBCTemplate;
+import com.epam.spm.dao.TagJDBCTemplate;
 import com.epam.spm.model.Tag;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,15 +21,19 @@ public class TestTag {
     }
 
     @Test
-    public void testCertificatesToDB() {
+    public void testTagToDB() {
         TagJDBCTemplate tagJDBCTemplate = new TagJDBCTemplate();
         tagJDBCTemplate.setDataSource(dataSource);
         context.close();
+        Tag newTag=new Tag();
 
-        tagJDBCTemplate.create("tested_tag");
+        newTag.setName("tested_tag");
+        tagJDBCTemplate.create(newTag);
+
         Tag tag = tagJDBCTemplate.getEntityByName("tested_tag");
         assertEquals("tested_tag", tag.getName());
         assertTrue(tagJDBCTemplate.deleteByName("tested_tag"));
+
     }
 
     @Test

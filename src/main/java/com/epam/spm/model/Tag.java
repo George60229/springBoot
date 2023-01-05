@@ -2,7 +2,7 @@ package com.epam.spm.model;
 
 import org.springframework.stereotype.Component;
 
-@Component("Tag")
+
 public class Tag {
 
 

@@ -2,7 +2,8 @@ package com.epam.spm.controller;
 
 import com.epam.spm.model.GiftCertificate;
 
-import com.epam.spm.JDBC.CertificatesJDBCTemplate;
+import com.epam.spm.dao.CertificatesJDBCTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,26 +13,31 @@ import java.util.List;
 
 
 @RestController
-
 public class CertificateController {
+
+    //todo ioc and di
+    //todo 2 config file
+
+
     @GetMapping("/getCertificate")
     public String getCertificate(@RequestParam String name) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         DataSource dataSource = context.getBean("dataSource", DataSource.class);
         CertificatesJDBCTemplate certificatesJDBCTemplate = new CertificatesJDBCTemplate();
         certificatesJDBCTemplate.setDataSource(dataSource);
+        //todo exceptionHandler controllerAdvice
         return certificatesJDBCTemplate.getEntityByName(name).toString();
     }
 
     @PostMapping("/addCertificate")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addCertificate(@RequestBody GiftCertificate giftCertificate) {
+    public GiftCertificate addCertificate(@RequestBody GiftCertificate giftCertificate) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         DataSource dataSource = context.getBean("dataSource", DataSource.class);
         CertificatesJDBCTemplate certificatesJDBCTemplate = new CertificatesJDBCTemplate();
         certificatesJDBCTemplate.setDataSource(dataSource);
 
-        certificatesJDBCTemplate.create(giftCertificate);
+        return certificatesJDBCTemplate.create(giftCertificate);
     }
 
     @GetMapping("/getAllCertificate")

@@ -1,31 +1,34 @@
 package com.epam.spm.model;
 
-import org.springframework.stereotype.Component;
-
+import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 
-@Component("giftCertificate")
 public class GiftCertificate {
 
 
-    private Integer certificate_id;
+    private Integer certificateId;
     private String name;
     private String description;
-    private int price;
+    private BigDecimal price;
     private int duration;
 
-    private Date create_date;
+    private Date createDate;
 
-    private Date last_update_date;
+    private Date lastUpdateDate;
+
+    private List<Integer> tags;
+
+    //todo sql create
 
 
     public Integer getId() {
-        return certificate_id;
+        return certificateId;
     }
 
     public void setId(Integer id) {
-        this.certificate_id = id;
+        this.certificateId = id;
     }
 
     public String getName() {
@@ -44,11 +47,11 @@ public class GiftCertificate {
         this.description = description;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -60,31 +63,41 @@ public class GiftCertificate {
         this.duration = duration;
     }
 
-    public Date getCreate_date() {
-        return create_date;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreate_date(Date create_date) {
-        this.create_date = create_date;
+    public void setCreateDate(Date create_date) {
+        this.createDate = create_date;
     }
 
-    public Date getLast_update_date() {
-        return last_update_date;
+    public Date getLastUpdateDate() {
+        return lastUpdateDate;
     }
 
-    public void setLast_update_date(Date last_update_date) {
-        this.last_update_date = last_update_date;
+    public void setLastUpdateDate(Date lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public List<Integer> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Integer> tags) {
+        this.tags = tags;
     }
 
     @Override
     public String toString() {
-        return "Gift_certificate{" +
+        return "GiftCertificate{" +
+                "certificateId=" + certificateId +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", duration=" + duration +
-                ", create_date=" + create_date +
-                ", last_update_date=" + last_update_date +
+                ", createDate=" + createDate +
+                ", lastUpdateDate=" + lastUpdateDate +
+                ", tags=" + tags +
                 '}';
     }
 }
