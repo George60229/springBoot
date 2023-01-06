@@ -1,8 +1,5 @@
 package com.epam.spm.model;
 
-import org.springframework.stereotype.Component;
-
-
 public class Tag {
 
 

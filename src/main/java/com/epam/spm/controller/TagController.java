@@ -18,7 +18,7 @@ public class TagController {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         DataSource dataSource = context.getBean("dataSource", DataSource.class);
         TagJDBCTemplate tagJDBCTemplate = new TagJDBCTemplate();
-        tagJDBCTemplate.setDataSource(dataSource);
+
         return tagJDBCTemplate.getEntityByName(name).getName();
     }
 
@@ -27,7 +27,7 @@ public class TagController {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         DataSource dataSource = context.getBean("dataSource", DataSource.class);
         TagJDBCTemplate tagJDBCTemplate = new TagJDBCTemplate();
-        tagJDBCTemplate.setDataSource(dataSource);
+
         tagJDBCTemplate.create(tag);
     }
 
@@ -36,7 +36,7 @@ public class TagController {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         DataSource dataSource = context.getBean("dataSource", DataSource.class);
         TagJDBCTemplate tagJDBCTemplate = new TagJDBCTemplate();
-        tagJDBCTemplate.setDataSource(dataSource);
+
         List<Tag> result = tagJDBCTemplate.listItems();
         StringBuilder list = new StringBuilder();
         for (Tag tag : result) {

@@ -12,4 +12,6 @@ abstract public class AbstractJDBCTemplate {
         this.dataSource = dataSource;
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
     }
+
+
 }

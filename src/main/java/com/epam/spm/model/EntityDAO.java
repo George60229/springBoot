@@ -4,10 +4,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 public interface EntityDAO<E> {
-    //todo fix interface
-    //todo rename to dao
-    //todo java doc in interface
-    void setDataSource(DataSource ds);
+
 
     E getEntityByName(String name);
 
