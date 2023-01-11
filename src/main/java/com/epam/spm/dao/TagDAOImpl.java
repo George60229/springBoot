@@ -9,14 +9,15 @@ import com.epam.spm.mapper.TagMapper;
 import com.epam.spm.service.TagService;
 import com.epam.spm.service.TagServiceImpl;
 
+import javax.sql.DataSource;
+import java.util.Date;
 import java.util.List;
 
 public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
     final TagService tagService=new TagServiceImpl();
 
-    public TagDAOImpl() {
-
-        super();
+    public TagDAOImpl(DataSource dataSource) {
+        setDataSource(dataSource);
     }
 
     public CreateTagDTO create(CreateTagDTO tag) {

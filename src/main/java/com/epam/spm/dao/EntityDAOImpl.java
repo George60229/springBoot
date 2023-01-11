@@ -1,5 +1,6 @@
 package com.epam.spm.dao;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
@@ -11,7 +12,7 @@ abstract public class EntityDAOImpl {
 
 
 
-    public void setDataSource(DataSource dataSource) {
+    protected void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
         this.jdbcTemplateObject = new JdbcTemplate(dataSource);
     }

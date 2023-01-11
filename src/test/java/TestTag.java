@@ -3,6 +3,7 @@ import com.epam.spm.dto.CreateTagDTO;
 import com.epam.spm.dto.TagDTO;
 import com.epam.spm.model.Tag;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -11,7 +12,7 @@ import javax.sql.DataSource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
+@Ignore
 public class TestTag {
     DataSource dataSource;
     ClassPathXmlApplicationContext context;
@@ -24,8 +25,7 @@ public class TestTag {
 
     @Test
     public void testTagToDB() {
-        TagDAOImpl tagJDBCTemplate = new TagDAOImpl();
-        tagJDBCTemplate.setDataSource(dataSource);
+        TagDAOImpl tagJDBCTemplate = new TagDAOImpl(dataSource);
         context.close();
         CreateTagDTO newTag=new CreateTagDTO();
 

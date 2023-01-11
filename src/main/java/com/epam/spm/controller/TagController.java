@@ -5,7 +5,7 @@ import com.epam.spm.dto.CreateTagDTO;
 import com.epam.spm.dto.TagDTO;
 import com.epam.spm.model.AddDataSource;
 import com.epam.spm.dao.TagDAOImpl;
-import com.epam.spm.model.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +16,13 @@ import java.util.List;
 public class TagController implements AddDataSource {
 
 
+
+    TagDAOImpl tagDAO;
     @GetMapping("/getTag")
     public String getTag(@RequestParam String name) {
-        TagDAOImpl tagJDBCTemplate=getDatasource();
 
-        return tagJDBCTemplate.getEntityByName(name).getName();
+
+        return tagDAO.getEntityByName(name).getName();
     }
 
     @PostMapping("/addTag")
@@ -45,8 +47,6 @@ public class TagController implements AddDataSource {
     public TagDAOImpl getDatasource(){
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         DataSource dataSource = context.getBean("dataSource", DataSource.class);
-        TagDAOImpl tagJDBCTemplate = new TagDAOImpl();
-        tagJDBCTemplate.setDataSource(dataSource);
-        return tagJDBCTemplate;
+        return new TagDAOImpl(dataSource);
     }
 }

@@ -7,7 +7,9 @@ import com.epam.spm.model.GiftCertificate;
 import com.epam.spm.mapper.GiftMapper;
 import com.epam.spm.service.CertificateService;
 import com.epam.spm.service.CertificateServiceImpl;
+import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +17,9 @@ import java.util.List;
 public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO {
     final CertificateService service = new CertificateServiceImpl();
 
-
+    public CertificateDAOImpl(DataSource dataSource) {
+        setDataSource(dataSource);
+    }
 
     final private String FIND_ALL_QUEUE = "SELECT certificates.certificate_id,create_date, description, duration, last_update_date, name, price, tag_id\n" +
             "FROM certificates\n" +
