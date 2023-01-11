@@ -1,7 +1,9 @@
 
+import com.epam.spm.dto.CertificateDTO;
+import com.epam.spm.dto.CreateCertificateDTO;
 import com.epam.spm.model.GiftCertificate;
 
-import com.epam.spm.dao.CertificatesJDBCTemplate;
+import com.epam.spm.dao.CertificateDAOImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -25,14 +27,14 @@ public class TestGiftCertificate {
 
     @Test
     public void testCertificatesToDB() {
-        CertificatesJDBCTemplate certificatesJDBCTemplate = new CertificatesJDBCTemplate();
+        CertificateDAOImpl certificatesJDBCTemplate = new CertificateDAOImpl();
         certificatesJDBCTemplate.setDataSource(dataSource);
         context.close();
-        GiftCertificate newCertificate = new GiftCertificate();
+        CreateCertificateDTO newCertificate = new CreateCertificateDTO();
         newCertificate.setName("test_from_hear");
         newCertificate.setPrice(BigDecimal.valueOf(200));
         certificatesJDBCTemplate.create(newCertificate);
-        GiftCertificate certificate = certificatesJDBCTemplate.getEntityByName("test_from_hear");
+        CertificateDTO certificate = certificatesJDBCTemplate.getEntityByName("test_from_hear");
 
         assertEquals("test_from_hear", certificate.getName());
         assertEquals(BigDecimal.valueOf(200), certificate.getPrice());

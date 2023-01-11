@@ -1,34 +1,30 @@
-package com.epam.spm.model;
+package com.epam.spm.dto;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 
-
-public class GiftCertificate {
-
-
+public class CertificateDTO {
+    //todo dto to post
     private Integer certificateId;
     private String name;
     private String description;
     private BigDecimal price;
     private int duration;
 
-    private Date createDate;
+    private Date createDate;//default
 
-    private Date lastUpdateDate;
+    private Date lastUpdateDate;//default LocalDateTime
+    //change to dateTime in db
 
     private List<Integer> tags;
 
-
-
-
-    public Integer getId() {
+    public Integer getCertificateId() {
         return certificateId;
     }
 
-    public void setId(Integer id) {
-        this.certificateId = id;
+    public void setCertificateId(Integer certificateId) {
+        this.certificateId = certificateId;
     }
 
     public String getName() {
@@ -67,8 +63,8 @@ public class GiftCertificate {
         return createDate;
     }
 
-    public void setCreateDate(Date create_date) {
-        this.createDate = create_date;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public Date getLastUpdateDate() {
@@ -86,19 +82,4 @@ public class GiftCertificate {
     public void setTags(List<Integer> tags) {
         this.tags = tags;
     }
-
-    @Override
-    public String toString() {
-        return "GiftCertificate{" +
-                "certificateId=" + certificateId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", duration=" + duration +
-                ", createDate=" + createDate +
-                ", lastUpdateDate=" + lastUpdateDate +
-                ", tags=" + tags +
-                '}';
-    }
 }
-

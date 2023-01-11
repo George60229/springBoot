@@ -1,9 +1,11 @@
 package com.epam.spm.controller;
 
-import com.epam.spm.model.GiftCertificate;
 
-import com.epam.spm.dao.CertificatesJDBCTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.epam.spm.dto.CertificateDTO;
+import com.epam.spm.dto.CreateCertificateDTO;
+import com.epam.spm.model.AddDataSource;
+
+import com.epam.spm.dao.CertificateDAOImpl;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,46 +15,28 @@ import java.util.List;
 
 
 @RestController
-public class CertificateController {
-
-
-    //todo ioc and d
-
-
-
+public class CertificateController implements AddDataSource {
 
 
     @GetMapping("/getCertificate")
     public String getCertificate(@RequestParam String name) {
-        CertificatesJDBCTemplate certificatesJDBCTemplate=new CertificatesJDBCTemplate();
-        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
-
-        DataSource dataSource = context.getBean("dataSource", DataSource.class);
-        certificatesJDBCTemplate.setDataSource(dataSource);
+        CertificateDAOImpl certificatesJDBCTemplate = getDatasource();
         return certificatesJDBCTemplate.getEntityByName(name).toString();
     }
 
     @PostMapping("/addCertificate")
     @ResponseStatus(HttpStatus.CREATED)
-    public GiftCertificate addCertificate(@RequestBody GiftCertificate giftCertificate) {
-        CertificatesJDBCTemplate certificatesJDBCTemplate=new CertificatesJDBCTemplate();
-        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
-
-        DataSource dataSource = context.getBean("dataSource", DataSource.class);
-        certificatesJDBCTemplate.setDataSource(dataSource);
+    public CreateCertificateDTO addCertificate(@RequestBody CreateCertificateDTO giftCertificate) {
+        CertificateDAOImpl certificatesJDBCTemplate = getDatasource();
         return certificatesJDBCTemplate.create(giftCertificate);
     }
 
     @GetMapping("/getAllCertificate")
     public StringBuilder getAllCertificate() {
-        CertificatesJDBCTemplate certificatesJDBCTemplate=new CertificatesJDBCTemplate();
-        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
-
-        DataSource dataSource = context.getBean("dataSource", DataSource.class);
-        certificatesJDBCTemplate.setDataSource(dataSource);
-        List<GiftCertificate> result = certificatesJDBCTemplate.listItems();
+        CertificateDAOImpl certificatesJDBCTemplate = getDatasource();
+        List<CertificateDTO> result = certificatesJDBCTemplate.listItems();
         StringBuilder list = new StringBuilder();
-        for (GiftCertificate certificate : result) {
+        for (CertificateDTO certificate : result) {
             list.append(certificate.toString()).append("||\n");
         }
         return list;
@@ -61,11 +45,7 @@ public class CertificateController {
     @DeleteMapping("/certificate")
     @ResponseStatus(HttpStatus.OK)
     public void deleteCertificateById(@RequestParam Integer id) {
-        CertificatesJDBCTemplate certificatesJDBCTemplate=new CertificatesJDBCTemplate();
-        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
-
-        DataSource dataSource = context.getBean("dataSource", DataSource.class);
-        certificatesJDBCTemplate.setDataSource(dataSource);
+        CertificateDAOImpl certificatesJDBCTemplate = getDatasource();
         if (!certificatesJDBCTemplate.deleteById(id)) {
             throw new IllegalArgumentException("Certificate with this id is not exist");
         }
@@ -74,28 +54,39 @@ public class CertificateController {
 
     @PatchMapping("/editCertificate")
     @ResponseStatus(HttpStatus.OK)
-    public void editCertificateById(@RequestParam Integer id, @RequestBody GiftCertificate certificate) {
-        CertificatesJDBCTemplate certificatesJDBCTemplate=new CertificatesJDBCTemplate();
-        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
-
-        DataSource dataSource = context.getBean("dataSource", DataSource.class);
-        certificatesJDBCTemplate.setDataSource(dataSource);
+    public void editCertificateById(@RequestParam Integer id, @RequestBody CreateCertificateDTO certificate) {
+        CertificateDAOImpl certificatesJDBCTemplate = getDatasource();
         certificatesJDBCTemplate.editById(id, certificate);
     }
 
     @GetMapping("/getAllCertificateDESC")
     public StringBuilder getAllCertificateDESC() {
-        CertificatesJDBCTemplate certificatesJDBCTemplate=new CertificatesJDBCTemplate();
-        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
-
-        DataSource dataSource = context.getBean("dataSource", DataSource.class);
-        certificatesJDBCTemplate.setDataSource(dataSource);
-        List<GiftCertificate> result = certificatesJDBCTemplate.listItemsDESC();
+        CertificateDAOImpl certificatesJDBCTemplate = getDatasource();
+        List<CertificateDTO> result = certificatesJDBCTemplate.listItemsDESC();
         StringBuilder list = new StringBuilder();
-        for (GiftCertificate certificate : result) {
+        for (CertificateDTO certificate : result) {
             list.append(certificate.toString()).append("||\n");
         }
         return list;
     }
 
+    @GetMapping("/findByTagName")
+    public StringBuilder getTagNyName(@RequestParam String tagName) {
+        CertificateDAOImpl certificatesJDBCTemplate = new CertificateDAOImpl();
+        List<CertificateDTO> result = certificatesJDBCTemplate.findByTagName(tagName);
+        StringBuilder list = new StringBuilder();
+        for (CertificateDTO certificate : result) {
+            list.append(certificate.toString()).append("||\n");
+        }
+        return list;
+    }
+
+    @Override
+    public CertificateDAOImpl getDatasource() {
+        CertificateDAOImpl certificatesJDBCTemplate = new CertificateDAOImpl();
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        DataSource dataSource = context.getBean("dataSource", DataSource.class);
+        certificatesJDBCTemplate.setDataSource(dataSource);
+        return certificatesJDBCTemplate;
+    }
 }

@@ -7,9 +7,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @org.springframework.web.bind.annotation.ControllerAdvice
 public class ControllerAdvice {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Response> handleException(IllegalArgumentException e) {
-        Response response = new Response(e.getMessage());
+    @ExceptionHandler(CertificateNotFoundException.class)
+    public ResponseEntity<Response> handleException(CertificateNotFoundException e) {
+        Response response = new Response(e.getMessage(),ErrorCode._40401);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(TagNotFoundException.class)
+    public ResponseEntity<Response> handleException(TagNotFoundException e) {
+        Response response = new Response(e.getMessage(),ErrorCode._40402);
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 

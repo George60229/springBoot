@@ -1,4 +1,6 @@
-import com.epam.spm.dao.TagJDBCTemplate;
+import com.epam.spm.dao.TagDAOImpl;
+import com.epam.spm.dto.CreateTagDTO;
+import com.epam.spm.dto.TagDTO;
 import com.epam.spm.model.Tag;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,15 +24,15 @@ public class TestTag {
 
     @Test
     public void testTagToDB() {
-        TagJDBCTemplate tagJDBCTemplate = new TagJDBCTemplate();
+        TagDAOImpl tagJDBCTemplate = new TagDAOImpl();
         tagJDBCTemplate.setDataSource(dataSource);
         context.close();
-        Tag newTag=new Tag();
+        CreateTagDTO newTag=new CreateTagDTO();
 
         newTag.setName("tested_tag");
         tagJDBCTemplate.create(newTag);
 
-        Tag tag = tagJDBCTemplate.getEntityByName("tested_tag");
+        TagDTO tag = tagJDBCTemplate.getEntityByName("tested_tag");
         assertEquals("tested_tag", tag.getName());
         assertTrue(tagJDBCTemplate.deleteByName("tested_tag"));
 
