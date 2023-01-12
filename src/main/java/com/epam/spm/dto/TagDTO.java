@@ -1,18 +1,18 @@
 package com.epam.spm.dto;
 
 public class TagDTO {
-    private Integer tag_id;
+    private Integer tagId;
+    //shift+f6;
 
     private String name;
 
 
-
     public Integer getId() {
-        return tag_id;
+        return tagId;
     }
 
     public void setId(Integer id) {
-        this.tag_id = id;
+        this.tagId = id;
     }
 
     public String getName() {

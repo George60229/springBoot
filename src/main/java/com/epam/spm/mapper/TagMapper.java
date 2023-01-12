@@ -11,6 +11,7 @@ public class TagMapper implements RowMapper<Tag> {
     public Tag mapRow(ResultSet rs, int rowNum) throws SQLException {
         Tag tag = new Tag();
         tag.setName(rs.getString("name"));
+        tag.setId(rs.getInt("tag_id"));
         return tag;
     }
 }

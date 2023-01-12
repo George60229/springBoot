@@ -2,10 +2,11 @@ package com.epam.spm.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@org.springframework.web.bind.annotation.ControllerAdvice
-public class ControllerAdvice {
+@ControllerAdvice
+public class AppControllerAdvice {
 
     @ExceptionHandler(CertificateNotFoundException.class)
     public ResponseEntity<Response> handleException(CertificateNotFoundException e) {

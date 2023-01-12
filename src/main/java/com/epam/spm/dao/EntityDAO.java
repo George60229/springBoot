@@ -1,16 +1,19 @@
 package com.epam.spm.dao;
 
 
+import com.epam.spm.dto.TagDTO;
+
 import java.util.List;
 
 public interface EntityDAO<E> {
 
     /**
      * get entity by name
+     *
      * @param name just name
      * @return list of certificates.
      */
-    E getEntityByName(String name);
+    List<E> getEntityByName(String name);
     /**
      * get all entity
      * @return list of certificates.

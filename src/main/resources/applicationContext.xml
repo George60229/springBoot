@@ -21,7 +21,13 @@
     </bean>
 
 
-    <bean id="certificateDAO" class="com.epam.spm.dao.CertificateDAOImpl">
+    <bean id="certificateDAO" class="com.epam.spm.dao.impl.CertificateDAOImpl">
+        <constructor-arg ref="dataSource">
+
+        </constructor-arg>
+    </bean>
+
+    <bean id="tagDAO" class="com.epam.spm.dao.impl.TagDAOImpl">
         <constructor-arg ref="dataSource">
 
         </constructor-arg>

@@ -2,7 +2,7 @@ package com.epam.spm.dao;
 
 import com.epam.spm.dto.CertificateDTO;
 import com.epam.spm.dto.CreateCertificateDTO;
-import com.epam.spm.model.GiftCertificate;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface CertificateDAO extends EntityDAO<CertificateDTO> {
      * @param certificate a list of changed fields
      * @return result this operation(successful or not).
      */
-    boolean editById(int id, CreateCertificateDTO certificate);
+    CreateCertificateDTO editById(int id, CreateCertificateDTO certificate);
 
     /**
      * get all entity ordered by desc
@@ -30,7 +30,7 @@ public interface CertificateDAO extends EntityDAO<CertificateDTO> {
      * @return list of certificates.
      */
 
-    CertificateDTO getEntityByDescription(String description);
+    List<CertificateDTO> getEntityByDescription(String description);
 
     /**
      * get all entity ordered by date asc
@@ -54,6 +54,8 @@ public interface CertificateDAO extends EntityDAO<CertificateDTO> {
      */
 
     List<CertificateDTO> findByTagName(String tagName);
+
+    CertificateDTO getCertificateById(@RequestParam int id);
 
 
 }

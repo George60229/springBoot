@@ -1,18 +1,19 @@
-import com.epam.spm.dao.TagDAOImpl;
-import com.epam.spm.dto.CreateTagDTO;
 import com.epam.spm.dto.TagDTO;
 import com.epam.spm.model.Tag;
+import com.epam.spm.converter.TagService;
+import com.epam.spm.converter.TagServiceImpl;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.sql.DataSource;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-@Ignore
+
+
 public class TestTag {
     DataSource dataSource;
     ClassPathXmlApplicationContext context;
@@ -25,24 +26,33 @@ public class TestTag {
 
     @Test
     public void testTagToDB() {
-        TagDAOImpl tagJDBCTemplate = new TagDAOImpl(dataSource);
-        context.close();
-        CreateTagDTO newTag=new CreateTagDTO();
 
-        newTag.setName("tested_tag");
-        tagJDBCTemplate.create(newTag);
+        TagDTO expectedTagDTO = new TagDTO();
+        expectedTagDTO.setId(1);
+        expectedTagDTO.setName("test");
+        Tag tag = new Tag();
+        tag.setId(1);
+        tag.setName("test");
 
-        TagDTO tag = tagJDBCTemplate.getEntityByName("tested_tag");
-        assertEquals("tested_tag", tag.getName());
-        assertTrue(tagJDBCTemplate.deleteByName("tested_tag"));
+        List<Tag> tags = new ArrayList<>();
+        tags.add(tag);
+        TagService service = new TagServiceImpl();
+        List<TagDTO> resDTO = service.convert(tags);
+        TagDTO res = resDTO.get(0);
+        assertEquals(res.getId(), expectedTagDTO.getId());
+        assertEquals(res.getName(), expectedTagDTO.getName());
+
 
     }
+
 
     @Test
     public void testGetSet() {
         Tag tag = new Tag();
         tag.setName("ALALAL");
+        tag.setId(1);
         assertEquals("ALALAL", tag.getName());
+        assertEquals(1, tag.getId());
 
     }
 }

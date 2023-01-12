@@ -1,4 +1,4 @@
-package com.epam.spm.service;
+package com.epam.spm.converter;
 
 import com.epam.spm.dto.TagDTO;
 import com.epam.spm.model.Tag;

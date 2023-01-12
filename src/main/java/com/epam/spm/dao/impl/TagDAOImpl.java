@@ -1,16 +1,14 @@
-package com.epam.spm.dao;
+package com.epam.spm.dao.impl;
 
 
+import com.epam.spm.dao.TagDAO;
 import com.epam.spm.dto.CreateTagDTO;
 import com.epam.spm.dto.TagDTO;
 import com.epam.spm.exception.TagNotFoundException;
-import com.epam.spm.model.Tag;
 import com.epam.spm.mapper.TagMapper;
-import com.epam.spm.service.TagService;
-import com.epam.spm.service.TagServiceImpl;
-
+import com.epam.spm.converter.TagService;
+import com.epam.spm.converter.TagServiceImpl;
 import javax.sql.DataSource;
-import java.util.Date;
 import java.util.List;
 
 public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
@@ -29,15 +27,16 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
     }
 
 
+
+
     @Override
-    public TagDTO getEntityByName(String name) {
+    public List<TagDTO> getEntityByName(String name) {
         String SQL = "select * from tages where name='" + name + "'";
         List<TagDTO> result = tagService.convert(jdbcTemplateObject.query(SQL, new TagMapper()));
         if (result.size() == 0) {
             throw new TagNotFoundException("Tag with this name is not found" + name);
         }
-
-        return result.get(0);
+        return result;
     }
 
     @Override

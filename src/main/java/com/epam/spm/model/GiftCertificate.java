@@ -2,6 +2,8 @@ package com.epam.spm.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -18,7 +20,7 @@ public class GiftCertificate {
 
     private Date lastUpdateDate;
 
-    private List<Integer> tags;
+    private List<String> tags;
 
 
 
@@ -79,26 +81,18 @@ public class GiftCertificate {
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    public List<Integer> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(List<Integer> tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 
-    @Override
-    public String toString() {
-        return "GiftCertificate{" +
-                "certificateId=" + certificateId +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", duration=" + duration +
-                ", createDate=" + createDate +
-                ", lastUpdateDate=" + lastUpdateDate +
-                ", tags=" + tags +
-                '}';
+    public void setTag(String tag_name) {
+        this.tags.add(tag_name);
     }
+
+
 }
 

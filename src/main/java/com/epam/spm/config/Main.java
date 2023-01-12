@@ -1,5 +1,5 @@
-package com.epam.spm.main;
-import com.epam.spm.dao.CertificateDAOImpl;
+package com.epam.spm.config;
+import com.epam.spm.dao.impl.CertificateDAOImpl;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 

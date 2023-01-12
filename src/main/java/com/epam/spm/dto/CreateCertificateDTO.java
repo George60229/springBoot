@@ -7,6 +7,7 @@ public class CreateCertificateDTO {
     private String description;
     private BigDecimal price;
     private int duration;
+    //todo request rename
 
     public String getName() {
         return name;
@@ -39,4 +40,5 @@ public class CreateCertificateDTO {
     public void setDuration(int duration) {
         this.duration = duration;
     }
+
 }

@@ -1,23 +1,23 @@
 package com.epam.spm.dto;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CertificateDTO {
-    //todo dto to post
+
     private Integer certificateId;
     private String name;
     private String description;
     private BigDecimal price;
     private int duration;
 
-    private Date createDate;//default
+    private String createDate;//default
 
-    private Date lastUpdateDate;//default LocalDateTime
+    private String lastUpdateDate;//default LocalDateTime
     //change to dateTime in db
 
-    private List<Integer> tags;
+    private List<String> tags = new ArrayList<>();
 
     public Integer getCertificateId() {
         return certificateId;
@@ -59,27 +59,28 @@ public class CertificateDTO {
         this.duration = duration;
     }
 
-    public Date getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
-    public Date getLastUpdateDate() {
+    public String getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(Date lastUpdateDate) {
+    public void setLastUpdateDate(String lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    public List<Integer> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(List<Integer> tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
+
 }

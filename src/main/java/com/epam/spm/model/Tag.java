@@ -9,7 +9,7 @@ public class Tag {
 
 
 
-    public Integer getId() {
+    public int getId() {
         return tag_id;
     }
 
@@ -25,11 +25,4 @@ public class Tag {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Tag{" +
-                "tag_id=" + tag_id +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }
