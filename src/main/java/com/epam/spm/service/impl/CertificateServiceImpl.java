@@ -1,5 +1,7 @@
 package com.epam.spm.service.impl;
 
+import com.epam.spm.converter.CertificateConverter;
+import com.epam.spm.converter.impl.CertificateConverterImpl;
 import com.epam.spm.dao.CertificateDAO;
 import com.epam.spm.dto.RequestCertificateDTO;
 import com.epam.spm.dto.ResponseCertificateDTO;
@@ -13,8 +15,6 @@ import java.util.List;
 public class CertificateServiceImpl implements CertificateService {
     @Autowired
     private CertificateDAO certificateDAO;
-
-
 
 
     @Override
@@ -64,7 +64,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public ResponseCertificateDTO editById(int id, RequestCertificateDTO certificate) {
-        return certificateDAO.editById(id,certificate);
+        return certificateDAO.editById(id, certificate);
     }
 
     @Override

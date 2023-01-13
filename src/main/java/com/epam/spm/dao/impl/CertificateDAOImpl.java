@@ -7,6 +7,8 @@ import com.epam.spm.dto.ResponseCertificateDTO;
 import com.epam.spm.dto.RequestCertificateDTO;
 import com.epam.spm.exception.CertificateNotFoundException;
 import com.epam.spm.mapper.GiftMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 
 import javax.sql.DataSource;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO {
+
     CertificateConverter service=new CertificateConverterImpl();
 
 

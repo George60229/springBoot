@@ -1,6 +1,5 @@
 package com.epam.spm.dto;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -63,13 +62,10 @@ public class ResponseCertificateDTO {
     }
 
     public LocalDateTime getCreateDate() {
-
         return createDate;
     }
 
     public void setCreateDate(LocalDateTime createDate) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.findAndRegisterModules();
         this.createDate = createDate;
     }
 
