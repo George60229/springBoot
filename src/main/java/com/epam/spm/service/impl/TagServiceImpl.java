@@ -5,6 +5,7 @@ import com.epam.spm.converter.impl.TagConverterImpl;
 import com.epam.spm.dao.TagDAO;
 import com.epam.spm.dto.RequestTagDTO;
 import com.epam.spm.dto.ResponseTagDTO;
+import com.epam.spm.model.GiftCertificate;
 import com.epam.spm.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,11 @@ public class TagServiceImpl implements TagService {
     TagDAO tagDAO;
 
     TagConverter converter=new TagConverterImpl();
+
+
     @Override
     public List<ResponseTagDTO> getTagByName(String name) {
-        return tagDAO.getEntityByName(name);
+        return converter.convert(tagDAO.getEntityByName(name));
     }
 
     @Override
@@ -28,6 +31,6 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public List<ResponseTagDTO> getAllTags() {
-        return tagDAO.listItems();
+        return converter.convert(tagDAO.listItems());
     }
 }

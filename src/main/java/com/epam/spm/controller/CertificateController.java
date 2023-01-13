@@ -1,11 +1,9 @@
 package com.epam.spm.controller;
 
 
-import com.epam.spm.dao.CertificateDAO;
 import com.epam.spm.dto.ResponseCertificateDTO;
 import com.epam.spm.dto.RequestCertificateDTO;
 
-import com.epam.spm.exception.Response;
 import com.epam.spm.service.CertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

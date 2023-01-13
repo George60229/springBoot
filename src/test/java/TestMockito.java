@@ -1,5 +1,4 @@
 import com.epam.spm.dto.ResponseCertificateDTO;
-import com.epam.spm.model.GiftCertificate;
 import com.epam.spm.converter.CertificateConverter;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +34,7 @@ public class TestMockito {
         expectedResponseCertificateDTO.setDescription("nothing");
         expectedResponseCertificateDTO.setDuration(10);
 
-        GiftCertificate certificate=new GiftCertificate();
+        com.epam.spm.model.GiftCertificate certificate=new com.epam.spm.model.GiftCertificate();
         certificate.setId(1);
         certificate.setName("test");
         certificate.setPrice(BigDecimal.valueOf(100));
@@ -43,7 +42,7 @@ public class TestMockito {
         certificate.setDuration(10);
         List<ResponseCertificateDTO> responseCertificateDTOList =new ArrayList<>();
         responseCertificateDTOList.add(expectedResponseCertificateDTO);
-        List<GiftCertificate> certificates = new ArrayList<>();
+        List<com.epam.spm.model.GiftCertificate> certificates = new ArrayList<>();
         certificates.add(certificate);
 
 

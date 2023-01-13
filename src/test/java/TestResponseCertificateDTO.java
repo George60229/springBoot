@@ -1,6 +1,5 @@
 
 import com.epam.spm.dto.ResponseCertificateDTO;
-import com.epam.spm.model.GiftCertificate;
 
 import com.epam.spm.converter.CertificateConverter;
 import com.epam.spm.converter.impl.CertificateConverterImpl;
@@ -17,7 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class TestGiftCertificate {
+public class TestResponseCertificateDTO {
     DataSource dataSource;
     ClassPathXmlApplicationContext context;
 
@@ -37,13 +36,13 @@ public class TestGiftCertificate {
         expectedResponseCertificateDTO.setDescription("nothing");
         expectedResponseCertificateDTO.setDuration(10);
 
-        GiftCertificate certificate = new GiftCertificate();
+        com.epam.spm.model.GiftCertificate certificate = new com.epam.spm.model.GiftCertificate();
         certificate.setId(1);
         certificate.setName("test");
         certificate.setPrice(BigDecimal.valueOf(100));
         certificate.setDescription("nothing");
         certificate.setDuration(10);
-        List<GiftCertificate> certificates = new ArrayList<>();
+        List<com.epam.spm.model.GiftCertificate> certificates = new ArrayList<>();
         certificates.add(certificate);
         CertificateConverter service = new CertificateConverterImpl();
         List<ResponseCertificateDTO> resDTO = service.convertToDTO(certificates);
@@ -61,7 +60,7 @@ public class TestGiftCertificate {
 
     @Test
     public void testGetSet() {
-        GiftCertificate certificate = new GiftCertificate();
+        com.epam.spm.model.GiftCertificate certificate = new com.epam.spm.model.GiftCertificate();
         certificate.setName("Tested");
         certificate.setDuration(1000);
         certificate.setDescription("It is amazing");

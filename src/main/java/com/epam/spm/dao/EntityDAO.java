@@ -1,6 +1,8 @@
 package com.epam.spm.dao;
 
 
+import com.epam.spm.model.GiftCertificate;
+
 import java.util.List;
 
 public interface EntityDAO<E> {

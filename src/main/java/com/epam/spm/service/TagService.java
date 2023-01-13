@@ -1,9 +1,8 @@
 package com.epam.spm.service;
 
-import com.epam.spm.dto.RequestCertificateDTO;
 import com.epam.spm.dto.RequestTagDTO;
-import com.epam.spm.dto.ResponseCertificateDTO;
 import com.epam.spm.dto.ResponseTagDTO;
+import com.epam.spm.model.GiftCertificate;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;

@@ -1,14 +1,12 @@
 package com.epam.spm.dao.impl;
 
-import com.epam.spm.converter.CertificateConverter;
-import com.epam.spm.converter.impl.CertificateConverterImpl;
 import com.epam.spm.dao.CertificateDAO;
-import com.epam.spm.dto.ResponseCertificateDTO;
 import com.epam.spm.dto.RequestCertificateDTO;
+import com.epam.spm.dto.RequestTagDTO;
+import com.epam.spm.dto.ResponseCertificateDTO;
 import com.epam.spm.exception.CertificateNotFoundException;
 import com.epam.spm.mapper.GiftMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import com.epam.spm.model.GiftCertificate;
 
 
 import javax.sql.DataSource;
@@ -17,7 +15,7 @@ import java.util.List;
 
 public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO {
 
-    CertificateConverter service=new CertificateConverterImpl();
+
 
 
     public CertificateDAOImpl(DataSource dataSource) {
@@ -34,13 +32,13 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
 
 
     @Override
-    public List<ResponseCertificateDTO> getEntityByName(String name) {
+    public List<GiftCertificate> getEntityByName(String name) {
 
         String SQL = "SELECT certificates.certificate_id,create_date, description, duration, last_update_date, name, price, tag_id\n" +
                 "FROM certificates\n" +
                 "         FULL JOIN certificates_to_tages on certificates.certificate_id = certificates_to_tages.certificate_id\n" +
                 "where certificates.name='" + name + "'";
-        List<ResponseCertificateDTO> result = service.convertToDTO(jdbcTemplateObject.query(SQL, new GiftMapper()));
+        List<GiftCertificate> result = jdbcTemplateObject.query(SQL, new GiftMapper());
 
         if (result.size() == 0) {
             throw new CertificateNotFoundException("There are no certificates with this name: " + name);
@@ -52,22 +50,22 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
     }
 
     @Override
-    public List<ResponseCertificateDTO> getEntityByDescription(String description) {
+    public List<com.epam.spm.model.GiftCertificate> getEntityByDescription(String description) {
 
         String SQL = "SELECT certificates.certificate_id,create_date, description, duration, last_update_date, name, price, tag_id\n" +
                 "FROM certificates\n" +
                 "         FULL JOIN certificates_to_tages on certificates.certificate_id = certificates_to_tages.certificate_id\n" +
                 "where certificates.name='" + description + "'";
 
-        return service.convertToDTO(jdbcTemplateObject.query(SQL, new GiftMapper()));
+        return jdbcTemplateObject.query(SQL, new GiftMapper());
 
     }
 
 
     @Override
-    public List<ResponseCertificateDTO> listItems() {
+    public List<GiftCertificate> listItems() {
         String sqlQueue = FIND_ALL_QUEUE + "order by certificate_info.name ASC ";
-        return service.convertToDTO(jdbcTemplateObject.query(sqlQueue, new GiftMapper()));
+        return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
 
     }
 
@@ -90,7 +88,7 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
     }
 
     @Override
-    public ResponseCertificateDTO editById(int id, RequestCertificateDTO certificate) {
+    public RequestCertificateDTO editById(int id, RequestCertificateDTO certificate) {
         String sqlQueue = "UPDATE certificates" + " SET";
 
 
@@ -112,32 +110,32 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
         if (jdbcTemplateObject.update(sqlQueue) == 0) {
             throw new CertificateNotFoundException("Field is not edited" + certificate);
         }
-        return service.convertRequestToResponse(certificate);
+        return certificate;
     }
 
     @Override
-    public List<ResponseCertificateDTO> listItemsDESC() {
+    public List<GiftCertificate> listItemsDESC() {
         String sqlQueue = FIND_ALL_QUEUE + "order by create_date DESC ";
-        return service.convertToDTO(jdbcTemplateObject.query(sqlQueue, new GiftMapper()));
+        return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
 
     }
 
     @Override
-    public List<ResponseCertificateDTO> listItemsDateASC() {
+    public List<GiftCertificate> listItemsDateASC() {
         String sqlQueue = FIND_ALL_QUEUE + "order by create_date ASC ";
-        return service.convertToDTO(jdbcTemplateObject.query(sqlQueue, new GiftMapper()));
+        return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
 
     }
 
     @Override
-    public List<ResponseCertificateDTO> listItemsDateDESC() {
+    public List<GiftCertificate> listItemsDateDESC() {
         String sqlQueue = FIND_ALL_QUEUE + "order by create_date DESC ";
-        return service.convertToDTO(jdbcTemplateObject.query(sqlQueue, new GiftMapper()));
+        return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
 
     }
 
     @Override
-    public List<ResponseCertificateDTO> findByTagName(String tagName) {
+    public List<GiftCertificate> findByTagName(String tagName) {
         String sqlQueue = "WITH info AS (\n" +
                 "    SELECT certificates.certificate_id,create_date, description, duration, last_update_date, name, price,tag_id\n" +
                 "    FROM certificates\n" +
@@ -146,21 +144,21 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
                 "SELECT info.certificate_id,create_date, description, duration, last_update_date, info.name, price,tages.tag_id, tages.name\n" +
                 "FROM info\n" +
                 "         FULL JOIN tages on info.tag_id = tages.tag_id where tages.name='" + tagName + "'";
-        return service.convertToDTO(jdbcTemplateObject.query(sqlQueue, new GiftMapper()));
+        return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
 
     }
 
     @Override
-    public ResponseCertificateDTO getCertificateById(int id) {
+    public GiftCertificate getCertificateById(int id) {
         String sqlQueue = "select * from certificate where id=" + id;
-        return service.convertOneToDTO(jdbcTemplateObject.queryForObject(sqlQueue, new GiftMapper()));
+        return jdbcTemplateObject.queryForObject(sqlQueue, new GiftMapper());
 
     }
 
     @Override
-    public ResponseCertificateDTO createCertificate(RequestCertificateDTO certificateDTO) {
+    public RequestCertificateDTO createCertificate(RequestCertificateDTO certificateDTO) {
         String sqlQuery = "insert into certificates (name, price,create_date,description,duration,last_update_date) values (?, ?,?,?,?,?)";
         jdbcTemplateObject.update(sqlQuery, certificateDTO.getName(), certificateDTO.getPrice(), LocalDateTime.now(), certificateDTO.getDescription(), certificateDTO.getDuration(), LocalDateTime.now());
-        return service.convertRequestToResponse(certificateDTO) ;
+        return certificateDTO;
     }
 }

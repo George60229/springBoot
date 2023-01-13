@@ -8,6 +8,9 @@ import com.epam.spm.exception.TagNotFoundException;
 import com.epam.spm.mapper.TagMapper;
 import com.epam.spm.converter.TagConverter;
 import com.epam.spm.converter.impl.TagConverterImpl;
+import com.epam.spm.model.GiftCertificate;
+import com.epam.spm.model.Tag;
+
 import javax.sql.DataSource;
 import java.util.List;
 
@@ -30,9 +33,9 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
 
 
     @Override
-    public List<ResponseTagDTO> getEntityByName(String name) {
+    public List<Tag> getEntityByName(String name) {
         String SQL = "select * from tages where name='" + name + "'";
-        List<ResponseTagDTO> result = tagConverter.convert(jdbcTemplateObject.query(SQL, new TagMapper()));
+        List<Tag> result = jdbcTemplateObject.query(SQL, new TagMapper());
         if (result.size() == 0) {
             throw new TagNotFoundException("Tag with this name is not found" + name);
         }
@@ -40,9 +43,9 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
     }
 
     @Override
-    public List<ResponseTagDTO> listItems() {
+    public List<Tag> listItems() {
         String SQL = "select * from tages order by name ASC";
-        return tagConverter.convert(jdbcTemplateObject.query(SQL, new TagMapper()));
+        return jdbcTemplateObject.query(SQL, new TagMapper());
 
     }
 
