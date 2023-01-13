@@ -1,5 +1,6 @@
 package com.epam.spm.converter.impl;
 import com.epam.spm.converter.TagConverter;
+import com.epam.spm.dto.RequestTagDTO;
 import com.epam.spm.dto.ResponseTagDTO;
 import com.epam.spm.model.Tag;
 
@@ -19,5 +20,20 @@ public class TagConverterImpl implements TagConverter {
         }
 
         return tagList;
+    }
+
+    @Override
+    public ResponseTagDTO convertOneToDTO(Tag tag) {
+        ResponseTagDTO responseTagDTO = new ResponseTagDTO();
+        responseTagDTO.setId(tag.getId());
+        responseTagDTO.setName(tag.getName());
+        return responseTagDTO;
+    }
+
+    @Override
+    public ResponseTagDTO convertRequestToResponse(RequestTagDTO tag) {
+        ResponseTagDTO responseTagDTO=new ResponseTagDTO();
+        responseTagDTO.setName(tag.getName());
+        return responseTagDTO;
     }
 }

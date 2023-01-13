@@ -5,7 +5,8 @@ import com.epam.spm.dto.RequestCertificateDTO;
 import com.epam.spm.dto.ResponseCertificateDTO;
 import com.epam.spm.model.GiftCertificate;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CertificateConverterImpl implements CertificateConverter {
 
@@ -34,16 +35,12 @@ public class CertificateConverterImpl implements CertificateConverter {
         giftCertificate.setDescription(certificate.getDescription());
         giftCertificate.setDuration(certificate.getDuration());
         giftCertificate.setTags(certificate.getTags());
-        if (certificate.getCreateDate() != null) {
-            giftCertificate.setCreateDate(certificate.getCreateDate().toString());
-        }
-        if (certificate.getLastUpdateDate() != null) {
-            giftCertificate.setLastUpdateDate(certificate.getLastUpdateDate().toString());
-        }
-
+        giftCertificate.setCreateDate(certificate.getCreateDate());
+        giftCertificate.setLastUpdateDate(certificate.getLastUpdateDate());
         giftCertificate.setPrice(certificate.getPrice());
         return giftCertificate;
     }
+
     @Override
     public ResponseCertificateDTO convertRequestToResponse(RequestCertificateDTO certificate) {
         ResponseCertificateDTO giftCertificate = new ResponseCertificateDTO();
@@ -52,9 +49,9 @@ public class CertificateConverterImpl implements CertificateConverter {
         giftCertificate.setName(certificate.getName());
         giftCertificate.setDescription(certificate.getDescription());
         giftCertificate.setDuration(certificate.getDuration());
-
         giftCertificate.setPrice(certificate.getPrice());
         return giftCertificate;
     }
+
 
 }
