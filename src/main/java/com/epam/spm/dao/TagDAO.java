@@ -1,15 +1,12 @@
 package com.epam.spm.dao;
 
-import com.epam.spm.dto.CreateTagDTO;
-import com.epam.spm.dto.TagDTO;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
+import com.epam.spm.dto.RequestTagDTO;
+import com.epam.spm.dto.ResponseTagDTO;
 
 
-public interface TagDAO extends EntityDAO<TagDTO> {
+public interface TagDAO extends EntityDAO<ResponseTagDTO> {
 
-    CreateTagDTO create(CreateTagDTO tag);
+    RequestTagDTO create(RequestTagDTO tag);
 
 
 

@@ -1,6 +1,6 @@
 package com.epam.spm.dto;
 
-public class CreateTagDTO {
+public class RequestTagDTO {
     String name;
 
     public String getName() {

@@ -1,12 +1,13 @@
 package com.epam.spm.dao;
 
-import com.epam.spm.dto.CertificateDTO;
-import com.epam.spm.dto.CreateCertificateDTO;
+import com.epam.spm.dto.ResponseCertificateDTO;
+import com.epam.spm.dto.RequestCertificateDTO;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-public interface CertificateDAO extends EntityDAO<CertificateDTO> {
+public interface CertificateDAO extends EntityDAO<ResponseCertificateDTO> {
 
     /**
      * edit entity by id
@@ -15,14 +16,14 @@ public interface CertificateDAO extends EntityDAO<CertificateDTO> {
      * @param certificate a list of changed fields
      * @return result this operation(successful or not).
      */
-    CreateCertificateDTO editById(int id, CreateCertificateDTO certificate);
+    ResponseCertificateDTO editById(int id, RequestCertificateDTO certificate);
 
     /**
      * get all entity ordered by desc
      *
      * @return list of certificates.
      */
-    List<CertificateDTO> listItemsDESC();
+    List<ResponseCertificateDTO> listItemsDESC();
 
     /**
      * get all entity by description
@@ -30,21 +31,21 @@ public interface CertificateDAO extends EntityDAO<CertificateDTO> {
      * @return list of certificates.
      */
 
-    List<CertificateDTO> getEntityByDescription(String description);
+    List<ResponseCertificateDTO> getEntityByDescription(String description);
 
     /**
      * get all entity ordered by date asc
      *
      * @return list of certificates.
      */
-    List<CertificateDTO> listItemsDateASC();
+    List<ResponseCertificateDTO> listItemsDateASC();
 
     /**
      * get all entity ordered by date desc
      *
      * @return list of certificates.
      */
-    List<CertificateDTO> listItemsDateDESC();
+    List<ResponseCertificateDTO> listItemsDateDESC();
 
     /**
      * get all certificates with this tag
@@ -53,9 +54,11 @@ public interface CertificateDAO extends EntityDAO<CertificateDTO> {
      * @return list of certificates.
      */
 
-    List<CertificateDTO> findByTagName(String tagName);
+    List<ResponseCertificateDTO> findByTagName(String tagName);
 
-    CertificateDTO getCertificateById(@RequestParam int id);
+    ResponseCertificateDTO getCertificateById(@RequestParam int id);
+
+    ResponseCertificateDTO createCertificate(@RequestBody RequestCertificateDTO certificateDTO);
 
 
 }

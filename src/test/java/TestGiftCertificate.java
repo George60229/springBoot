@@ -1,9 +1,9 @@
 
-import com.epam.spm.dto.CertificateDTO;
+import com.epam.spm.dto.ResponseCertificateDTO;
 import com.epam.spm.model.GiftCertificate;
 
-import com.epam.spm.converter.CertificateService;
-import com.epam.spm.converter.CertificateServiceImpl;
+import com.epam.spm.converter.CertificateConverter;
+import com.epam.spm.converter.impl.CertificateConverterImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -30,12 +30,12 @@ public class TestGiftCertificate {
     @Test
     public void testCertificatesToDTO() {
 
-        CertificateDTO expectedCertificateDTO = new CertificateDTO();
-        expectedCertificateDTO.setCertificateId(1);
-        expectedCertificateDTO.setName("test");
-        expectedCertificateDTO.setPrice(BigDecimal.valueOf(100));
-        expectedCertificateDTO.setDescription("nothing");
-        expectedCertificateDTO.setDuration(10);
+        ResponseCertificateDTO expectedResponseCertificateDTO = new ResponseCertificateDTO();
+        expectedResponseCertificateDTO.setCertificateId(1);
+        expectedResponseCertificateDTO.setName("test");
+        expectedResponseCertificateDTO.setPrice(BigDecimal.valueOf(100));
+        expectedResponseCertificateDTO.setDescription("nothing");
+        expectedResponseCertificateDTO.setDuration(10);
 
         GiftCertificate certificate = new GiftCertificate();
         certificate.setId(1);
@@ -45,16 +45,16 @@ public class TestGiftCertificate {
         certificate.setDuration(10);
         List<GiftCertificate> certificates = new ArrayList<>();
         certificates.add(certificate);
-        CertificateService service = new CertificateServiceImpl();
-        List<CertificateDTO> resDTO = service.convertToDTO(certificates);
+        CertificateConverter service = new CertificateConverterImpl();
+        List<ResponseCertificateDTO> resDTO = service.convertToDTO(certificates);
 
-        CertificateDTO res = resDTO.get(0);
+        ResponseCertificateDTO res = resDTO.get(0);
 
-        assertEquals(res.getCertificateId(), expectedCertificateDTO.getCertificateId());
-        assertEquals(res.getDescription(), expectedCertificateDTO.getDescription());
-        assertEquals(res.getDuration(), expectedCertificateDTO.getDuration());
-        assertEquals(res.getName(), expectedCertificateDTO.getName());
-        assertEquals(res.getPrice(), expectedCertificateDTO.getPrice());
+        assertEquals(res.getCertificateId(), expectedResponseCertificateDTO.getCertificateId());
+        assertEquals(res.getDescription(), expectedResponseCertificateDTO.getDescription());
+        assertEquals(res.getDuration(), expectedResponseCertificateDTO.getDuration());
+        assertEquals(res.getName(), expectedResponseCertificateDTO.getName());
+        assertEquals(res.getPrice(), expectedResponseCertificateDTO.getPrice());
 
 
     }

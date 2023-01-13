@@ -1,8 +1,6 @@
 package com.epam.spm.dao;
 
 
-import com.epam.spm.dto.TagDTO;
-
 import java.util.List;
 
 public interface EntityDAO<E> {

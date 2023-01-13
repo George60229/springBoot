@@ -1,6 +1,5 @@
 package com.epam.spm.mapper;
 
-import com.epam.spm.dto.TagDTO;
 import com.epam.spm.model.Tag;
 import org.springframework.jdbc.core.RowMapper;
 

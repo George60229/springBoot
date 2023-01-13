@@ -2,23 +2,23 @@ package com.epam.spm.dao.impl;
 
 
 import com.epam.spm.dao.TagDAO;
-import com.epam.spm.dto.CreateTagDTO;
-import com.epam.spm.dto.TagDTO;
+import com.epam.spm.dto.RequestTagDTO;
+import com.epam.spm.dto.ResponseTagDTO;
 import com.epam.spm.exception.TagNotFoundException;
 import com.epam.spm.mapper.TagMapper;
-import com.epam.spm.converter.TagService;
-import com.epam.spm.converter.TagServiceImpl;
+import com.epam.spm.converter.TagConverter;
+import com.epam.spm.converter.impl.TagConverterImpl;
 import javax.sql.DataSource;
 import java.util.List;
 
 public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
-    final TagService tagService=new TagServiceImpl();
+    final TagConverter tagConverter =new TagConverterImpl();
 
     public TagDAOImpl(DataSource dataSource) {
         setDataSource(dataSource);
     }
 
-    public CreateTagDTO create(CreateTagDTO tag) {
+    public RequestTagDTO create(RequestTagDTO tag) {
         String SQL = "insert into tages (name) values (?)";
 
         jdbcTemplateObject.update(SQL, tag.getName());
@@ -30,9 +30,9 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
 
 
     @Override
-    public List<TagDTO> getEntityByName(String name) {
+    public List<ResponseTagDTO> getEntityByName(String name) {
         String SQL = "select * from tages where name='" + name + "'";
-        List<TagDTO> result = tagService.convert(jdbcTemplateObject.query(SQL, new TagMapper()));
+        List<ResponseTagDTO> result = tagConverter.convert(jdbcTemplateObject.query(SQL, new TagMapper()));
         if (result.size() == 0) {
             throw new TagNotFoundException("Tag with this name is not found" + name);
         }
@@ -40,9 +40,9 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
     }
 
     @Override
-    public List<TagDTO> listItems() {
+    public List<ResponseTagDTO> listItems() {
         String SQL = "select * from tages order by name ASC";
-        return tagService.convert(jdbcTemplateObject.query(SQL, new TagMapper()));
+        return tagConverter.convert(jdbcTemplateObject.query(SQL, new TagMapper()));
 
     }
 

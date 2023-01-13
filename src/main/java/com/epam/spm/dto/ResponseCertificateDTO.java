@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CertificateDTO {
+public class ResponseCertificateDTO {
 
     private Integer certificateId;
     private String name;

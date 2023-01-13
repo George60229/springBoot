@@ -2,7 +2,7 @@ package com.epam.spm.dto;
 
 import java.math.BigDecimal;
 
-public class CreateCertificateDTO {
+public class RequestCertificateDTO {
     private String name;
     private String description;
     private BigDecimal price;

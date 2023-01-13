@@ -1,6 +1,6 @@
-import com.epam.spm.dto.CertificateDTO;
+import com.epam.spm.dto.ResponseCertificateDTO;
 import com.epam.spm.model.GiftCertificate;
-import com.epam.spm.converter.CertificateService;
+import com.epam.spm.converter.CertificateConverter;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -23,17 +23,17 @@ public class TestMockito {
     }
 
     @Mock
-    CertificateService serviceMockito;
+    CertificateConverter serviceMockito;
 
     @Test
     public void testConvertToDTO() {
         MockitoAnnotations.openMocks(this);
-        CertificateDTO expectedCertificateDTO = new CertificateDTO();
-        expectedCertificateDTO.setCertificateId(1);
-        expectedCertificateDTO.setName("test");
-        expectedCertificateDTO.setPrice(BigDecimal.valueOf(100));
-        expectedCertificateDTO.setDescription("nothing");
-        expectedCertificateDTO.setDuration(10);
+        ResponseCertificateDTO expectedResponseCertificateDTO = new ResponseCertificateDTO();
+        expectedResponseCertificateDTO.setCertificateId(1);
+        expectedResponseCertificateDTO.setName("test");
+        expectedResponseCertificateDTO.setPrice(BigDecimal.valueOf(100));
+        expectedResponseCertificateDTO.setDescription("nothing");
+        expectedResponseCertificateDTO.setDuration(10);
 
         GiftCertificate certificate=new GiftCertificate();
         certificate.setId(1);
@@ -41,15 +41,15 @@ public class TestMockito {
         certificate.setPrice(BigDecimal.valueOf(100));
         certificate.setDescription("nothing");
         certificate.setDuration(10);
-        List<CertificateDTO>certificateDTOList=new ArrayList<>();
-        certificateDTOList.add(expectedCertificateDTO);
+        List<ResponseCertificateDTO> responseCertificateDTOList =new ArrayList<>();
+        responseCertificateDTOList.add(expectedResponseCertificateDTO);
         List<GiftCertificate> certificates = new ArrayList<>();
         certificates.add(certificate);
 
 
-        Mockito.doReturn(certificateDTOList).when(serviceMockito).convertToDTO(certificates);
+        Mockito.doReturn(responseCertificateDTOList).when(serviceMockito).convertToDTO(certificates);
 
-        assertEquals(certificateDTOList, serviceMockito.convertToDTO(certificates));
+        assertEquals(responseCertificateDTOList, serviceMockito.convertToDTO(certificates));
     }
 
 }
