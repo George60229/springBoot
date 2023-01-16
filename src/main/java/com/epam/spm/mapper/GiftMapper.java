@@ -11,7 +11,9 @@ import java.util.List;
 
 
 public class GiftMapper implements RowMapper<GiftCertificate> {
+
     public GiftCertificate mapRow(ResultSet rs, int rowNum) throws SQLException {
+
 
         GiftCertificate certificate = new GiftCertificate();
         certificate.setId(rs.getInt("certificate_id"));
@@ -23,10 +25,8 @@ public class GiftMapper implements RowMapper<GiftCertificate> {
         String tagName = rs.getString("tag_name");
         tagIdList.add(tagName);
         certificate.setTags(tagIdList);
-        //todo
-        //rs.getTimestamp().toLocalDateTime();
-        certificate.setCreateDate(rs.getTimestamp("create_date").toLocalDateTime());
-        certificate.setLastUpdateDate(rs.getTimestamp("last_update_date").toLocalDateTime());
+        certificate.setCreateDate(rs.getTimestamp("create_date").toLocalDateTime().toLocalDate());
+        certificate.setLastUpdateDate(rs.getTimestamp("last_update_date").toLocalDateTime().toLocalDate());
 
 
         return certificate;

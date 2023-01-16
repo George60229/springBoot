@@ -3,10 +3,13 @@ import com.epam.spm.converter.TagConverter;
 import com.epam.spm.dto.RequestTagDTO;
 import com.epam.spm.dto.ResponseTagDTO;
 import com.epam.spm.model.Tag;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Component
 public class TagConverterImpl implements TagConverter {
     @Override
     public List<ResponseTagDTO> convert(List<Tag> tags) {
@@ -32,6 +35,7 @@ public class TagConverterImpl implements TagConverter {
 
     @Override
     public ResponseTagDTO convertRequestToResponse(RequestTagDTO tag) {
+
         ResponseTagDTO responseTagDTO=new ResponseTagDTO();
         responseTagDTO.setName(tag.getName());
         return responseTagDTO;

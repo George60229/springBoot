@@ -3,31 +3,33 @@ package com.epam.spm.converter.impl;
 import com.epam.spm.converter.CertificateConverter;
 import com.epam.spm.dto.RequestCertificateDTO;
 import com.epam.spm.dto.ResponseCertificateDTO;
+import com.epam.spm.model.GiftCertificate;
+import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+@Component
 public class CertificateConverterImpl implements CertificateConverter {
 
 
     @Override
-    public List<ResponseCertificateDTO> convertToDTO(List<com.epam.spm.model.GiftCertificate> certificates) {
+    public List<ResponseCertificateDTO> convertToDTO(List<GiftCertificate> certificates) {
 
-        List<ResponseCertificateDTO> responseCertificateDTOList = new ArrayList<>();
+        List<ResponseCertificateDTO> responseCertificateDTOList = new LinkedList<>();
 
         for (com.epam.spm.model.GiftCertificate certificate : certificates) {
-
-
             responseCertificateDTOList.add(convertOneToDTO(certificate));
-
         }
-
         return responseCertificateDTOList;
         //controller->service->dao
     }
 
     @Override
-    public ResponseCertificateDTO convertOneToDTO(com.epam.spm.model.GiftCertificate certificate) {
+    public ResponseCertificateDTO convertOneToDTO(GiftCertificate certificate) {
         ResponseCertificateDTO responseCertificateDTO = new ResponseCertificateDTO();
         responseCertificateDTO.setCertificateId(certificate.getId());
         responseCertificateDTO.setName(certificate.getName());
@@ -49,6 +51,9 @@ public class CertificateConverterImpl implements CertificateConverter {
         responseCertificateDTO.setDescription(certificate.getDescription());
         responseCertificateDTO.setDuration(certificate.getDuration());
         responseCertificateDTO.setPrice(certificate.getPrice());
+        responseCertificateDTO.setCreateDate(LocalDate.now());
+        responseCertificateDTO.setLastUpdateDate(LocalDate.now());
+        //todo create id here
         return responseCertificateDTO;
     }
 

@@ -25,4 +25,6 @@ public class AppConfig {
         DataSource dataSource = context.getBean("dataSource", DataSource.class);
         return new TagDAOImpl(dataSource);
     }
+
+
 }

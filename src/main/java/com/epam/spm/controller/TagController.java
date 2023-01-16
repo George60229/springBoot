@@ -28,7 +28,7 @@ public class TagController {
     @PostMapping("/addTag")
     public ResponseTagDTO addTag(@RequestBody RequestTagDTO tag) {
 
-        return tagService.createCertificate(tag);
+        return tagService.createTag(tag);
     }
 
 

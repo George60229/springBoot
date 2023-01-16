@@ -2,6 +2,7 @@ package com.epam.spm.dto;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,9 @@ public class ResponseCertificateDTO {
     private BigDecimal price;
     private int duration;
 
-    private LocalDateTime createDate;//default
+    private LocalDate createDate;//default
 
-    private LocalDateTime lastUpdateDate;//default LocalDateTime
+    private LocalDate lastUpdateDate;//default LocalDateTime
     //change to dateTime in db
 
     private List<String> tags = new ArrayList<>();
@@ -61,19 +62,19 @@ public class ResponseCertificateDTO {
         this.duration = duration;
     }
 
-    public LocalDateTime getCreateDate() {
+    public LocalDate getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDateTime createDate) {
+    public void setCreateDate(LocalDate createDate) {
         this.createDate = createDate;
     }
 
-    public LocalDateTime getLastUpdateDate() {
+    public LocalDate getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
+    public void setLastUpdateDate(LocalDate lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 

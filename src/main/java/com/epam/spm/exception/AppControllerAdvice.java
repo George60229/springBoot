@@ -8,16 +8,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class AppControllerAdvice {
 
-    @ExceptionHandler(CertificateNotFoundException.class)
-    public ResponseEntity<Response> handleException(CertificateNotFoundException e) {
-        Response response = new Response(e.getMessage(),ErrorCode._40401);
+    @ExceptionHandler(AppNotFoundException.class)
+    public ResponseEntity<Response> handleException(AppNotFoundException e) {
+        Response response = new Response(e.getMessage(),e.getErrorCode().getCode());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
-    @ExceptionHandler(TagNotFoundException.class)
-    public ResponseEntity<Response> handleException(TagNotFoundException e) {
-        Response response = new Response(e.getMessage(),ErrorCode._40402);
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
+
 
 }
 

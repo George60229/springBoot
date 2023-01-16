@@ -10,4 +10,6 @@ public interface TagConverter {
     List<ResponseTagDTO> convert(List<Tag> tags);
     ResponseTagDTO convertOneToDTO(Tag tag);
     ResponseTagDTO convertRequestToResponse(RequestTagDTO tag);
+
+
 }

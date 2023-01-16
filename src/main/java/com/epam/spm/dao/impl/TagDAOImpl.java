@@ -3,33 +3,43 @@ package com.epam.spm.dao.impl;
 
 import com.epam.spm.dao.TagDAO;
 import com.epam.spm.dto.RequestTagDTO;
-import com.epam.spm.dto.ResponseTagDTO;
-import com.epam.spm.exception.TagNotFoundException;
+import com.epam.spm.exception.AppNotFoundException;
+import com.epam.spm.exception.ErrorCode;
 import com.epam.spm.mapper.TagMapper;
-import com.epam.spm.converter.TagConverter;
-import com.epam.spm.converter.impl.TagConverterImpl;
-import com.epam.spm.model.GiftCertificate;
 import com.epam.spm.model.Tag;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
-    final TagConverter tagConverter =new TagConverterImpl();
 
     public TagDAOImpl(DataSource dataSource) {
         setDataSource(dataSource);
     }
 
-    public RequestTagDTO create(RequestTagDTO tag) {
-        String SQL = "insert into tages (name) values (?)";
+    public Tag create(RequestTagDTO tag) {
 
-        jdbcTemplateObject.update(SQL, tag.getName());
-        return tag;
+
+
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+                .withTableName("tages").usingGeneratedKeyColumns("tag_id");
+
+        Map<String, Object> parameters = new HashMap<>(1);
+        parameters.put("name",tag.getName());
+        int newId = (int) simpleJdbcInsert.executeAndReturnKey(parameters);
+        Tag result=new Tag();
+        result.setName(tag.getName());
+        result.setId(newId);
+        return result;
 
     }
-
-
 
 
     @Override
@@ -37,7 +47,7 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
         String SQL = "select * from tages where name='" + name + "'";
         List<Tag> result = jdbcTemplateObject.query(SQL, new TagMapper());
         if (result.size() == 0) {
-            throw new TagNotFoundException("Tag with this name is not found" + name);
+            throw new AppNotFoundException("Tag with this name is not found" + name, ErrorCode.TAG_NOT_FOUND);
         }
         return result;
     }
@@ -54,7 +64,7 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
     public boolean deleteById(Integer id) {
         String SQL = "delete from tages where tag_id=" + id;
         if (jdbcTemplateObject.update(SQL) == 0) {
-            throw new TagNotFoundException("Tag with this id " + id + " is not deleted ");
+            throw new AppNotFoundException("Tag with this id " + id + " is not deleted ", ErrorCode.TAG_NOT_FOUND);
         }
         return true;
     }
@@ -63,7 +73,7 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
     public boolean deleteByName(String name) {
         String SQL = "delete from tages where name='" + name + "'";
         if (jdbcTemplateObject.update(SQL) == 0) {
-            throw new TagNotFoundException("Tag with this name " + name + " is not deleted ");
+            throw new AppNotFoundException("Tag with this name " + name + " is not deleted ", ErrorCode.TAG_NOT_FOUND);
         }
         return true;
     }

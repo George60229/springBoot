@@ -1,6 +1,7 @@
 package com.epam.spm.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,9 +15,9 @@ public class GiftCertificate {
     private BigDecimal price;
     private int duration;
 
-    private LocalDateTime createDate;
+    private LocalDate createDate;
 
-    private LocalDateTime lastUpdateDate;
+    private LocalDate lastUpdateDate;
 
     private List<String> tags;
 
@@ -63,19 +64,19 @@ public class GiftCertificate {
         this.duration = duration;
     }
 
-    public LocalDateTime getCreateDate() {
+    public LocalDate getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDateTime create_date) {
+    public void setCreateDate(LocalDate create_date) {
         this.createDate = create_date;
     }
 
-    public LocalDateTime getLastUpdateDate() {
+    public LocalDate getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
+    public void setLastUpdateDate(LocalDate lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 
@@ -88,6 +89,10 @@ public class GiftCertificate {
     }
 
     public void setTag(String tag_name) {
+        this.tags.add(tag_name);
+    }
+
+    public void addTag(String tag_name) {
         this.tags.add(tag_name);
     }
 

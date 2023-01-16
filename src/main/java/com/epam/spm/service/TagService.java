@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface TagService {
     List<ResponseTagDTO> getTagByName(String name);
-    ResponseTagDTO createCertificate(@RequestBody RequestTagDTO tagDTO);
+    ResponseTagDTO createTag(@RequestBody RequestTagDTO tagDTO);
     List<ResponseTagDTO> getAllTags();
 
 

@@ -3,12 +3,12 @@ package com.epam.spm.exception;
 public class Response {
 
     private String message;
-    private ErrorCode code;
+    private int code;
 
     public Response() {
     }
 
-    public Response(String message,ErrorCode code) {
+    public Response(String message,int code) {
         this.message = message;
         this.code=code;
     }
@@ -21,11 +21,11 @@ public class Response {
         this.message = message;
     }
 
-    public ErrorCode getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(ErrorCode code) {
+    public void setCode(int code) {
         this.code = code;
     }
 }

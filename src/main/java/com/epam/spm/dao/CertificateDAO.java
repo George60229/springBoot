@@ -1,6 +1,5 @@
 package com.epam.spm.dao;
 
-import com.epam.spm.dto.ResponseCertificateDTO;
 import com.epam.spm.dto.RequestCertificateDTO;
 import com.epam.spm.model.GiftCertificate;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,7 +58,7 @@ public interface CertificateDAO extends EntityDAO<GiftCertificate> {
 
     GiftCertificate getCertificateById(@RequestParam int id);
 
-    RequestCertificateDTO createCertificate(@RequestBody RequestCertificateDTO certificateDTO);
+    GiftCertificate createCertificate(@RequestBody RequestCertificateDTO certificateDTO);
 
 
 }
