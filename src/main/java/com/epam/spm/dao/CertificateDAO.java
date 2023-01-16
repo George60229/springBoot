@@ -16,7 +16,7 @@ public interface CertificateDAO extends EntityDAO<GiftCertificate> {
      * @param certificate a list of changed fields
      * @return result this operation(successful or not).
      */
-    RequestCertificateDTO editById(int id, RequestCertificateDTO certificate);
+    GiftCertificate editById(int id, RequestCertificateDTO certificate);
 
     /**
      * get all entity ordered by desc

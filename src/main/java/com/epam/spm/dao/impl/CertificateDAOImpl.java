@@ -90,7 +90,7 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
     }
 
     @Override
-    public RequestCertificateDTO editById(int id, RequestCertificateDTO certificate) {
+    public GiftCertificate editById(int id, RequestCertificateDTO certificate) {
         String sqlQueue = "UPDATE certificates" + " SET";
 
 
@@ -112,7 +112,15 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
         if (jdbcTemplateObject.update(sqlQueue) == 0) {
             throw new AppNotFoundException("Field is not edited" + certificate, ErrorCode.CERTIFICATE_NOT_FOUND);
         }
-        return certificate;
+        GiftCertificate result = new GiftCertificate();
+        result.setDescription(certificate.getDescription());
+        result.setName(certificate.getName());
+        result.setId(id);
+        result.setPrice(certificate.getPrice());
+        result.setDuration(certificate.getDuration());
+        result.setLastUpdateDate(LocalDate.now());
+        result.setCreateDate(LocalDate.now());
+        return result;
     }
 
     @Override
@@ -163,12 +171,12 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
                 .withTableName("certificates").usingGeneratedKeyColumns("certificate_id");
 
         Map<String, Object> parameters = new HashMap<>(1);
-        parameters.put("description",certificateDTO.getDescription());
-        parameters.put("duration",certificateDTO.getDuration());
-        parameters.put("price",certificateDTO.getPrice());
-        parameters.put("name",certificateDTO.getName());
+        parameters.put("description", certificateDTO.getDescription());
+        parameters.put("duration", certificateDTO.getDuration());
+        parameters.put("price", certificateDTO.getPrice());
+        parameters.put("name", certificateDTO.getName());
         int newId = (int) simpleJdbcInsert.executeAndReturnKey(parameters);
-        GiftCertificate result=new GiftCertificate();
+        GiftCertificate result = new GiftCertificate();
         result.setName(certificateDTO.getName());
         result.setPrice(certificateDTO.getPrice());
         result.setDuration(certificateDTO.getDuration());

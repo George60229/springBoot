@@ -9,5 +9,5 @@ public interface CertificateConverter {
     List<ResponseCertificateDTO> convertToDTO(List<com.epam.spm.model.GiftCertificate> dto);
 
     ResponseCertificateDTO convertOneToDTO(com.epam.spm.model.GiftCertificate certificate);
-    ResponseCertificateDTO convertRequestToResponse(RequestCertificateDTO certificate);
+
 }

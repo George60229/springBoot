@@ -68,7 +68,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public ResponseCertificateDTO editById(int id, RequestCertificateDTO certificate) {
-        return converter.convertRequestToResponse(certificateDAO.editById(id, certificate));
+        return converter.convertOneToDTO(certificateDAO.editById(id, certificate));
     }
 
     @Override

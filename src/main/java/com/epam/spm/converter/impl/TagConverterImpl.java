@@ -1,4 +1,5 @@
 package com.epam.spm.converter.impl;
+
 import com.epam.spm.converter.TagConverter;
 import com.epam.spm.dto.RequestTagDTO;
 import com.epam.spm.dto.ResponseTagDTO;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
 public class TagConverterImpl implements TagConverter {
     @Override
@@ -33,11 +35,4 @@ public class TagConverterImpl implements TagConverter {
         return responseTagDTO;
     }
 
-    @Override
-    public ResponseTagDTO convertRequestToResponse(RequestTagDTO tag) {
-
-        ResponseTagDTO responseTagDTO=new ResponseTagDTO();
-        responseTagDTO.setName(tag.getName());
-        return responseTagDTO;
-    }
 }

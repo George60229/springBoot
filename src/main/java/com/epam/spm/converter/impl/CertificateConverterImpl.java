@@ -42,20 +42,7 @@ public class CertificateConverterImpl implements CertificateConverter {
         return responseCertificateDTO;
     }
 
-    @Override
-    public ResponseCertificateDTO convertRequestToResponse(RequestCertificateDTO certificate) {
-        ResponseCertificateDTO responseCertificateDTO = new ResponseCertificateDTO();
 
-        //todo
-        responseCertificateDTO.setName(certificate.getName());
-        responseCertificateDTO.setDescription(certificate.getDescription());
-        responseCertificateDTO.setDuration(certificate.getDuration());
-        responseCertificateDTO.setPrice(certificate.getPrice());
-        responseCertificateDTO.setCreateDate(LocalDate.now());
-        responseCertificateDTO.setLastUpdateDate(LocalDate.now());
-        //todo create id here
-        return responseCertificateDTO;
-    }
 
 
 }
