@@ -1,8 +1,7 @@
 
-import com.epam.spm.dto.ResponseCertificateDTO;
+import com.epam.spm.dto.response.ResponseCertificateDTO;
 
 import com.epam.spm.converter.CertificateConverter;
-import com.epam.spm.converter.impl.CertificateConverterImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -44,8 +43,8 @@ public class TestResponseCertificateDTO {
         certificate.setDuration(10);
         List<com.epam.spm.model.GiftCertificate> certificates = new ArrayList<>();
         certificates.add(certificate);
-        CertificateConverter service = new CertificateConverterImpl();
-        List<ResponseCertificateDTO> resDTO = service.convertToDTO(certificates);
+        CertificateConverter service = new CertificateConverter();
+        List<ResponseCertificateDTO> resDTO = service.convertListToDTO(certificates);
 
         ResponseCertificateDTO res = resDTO.get(0);
 

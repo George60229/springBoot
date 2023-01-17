@@ -1,7 +1,6 @@
 package com.epam.spm.dao;
 
 
-import com.epam.spm.model.GiftCertificate;
 
 import java.util.List;
 
@@ -14,11 +13,8 @@ public interface EntityDAO<E> {
      * @return list of certificates.
      */
     List<E> getEntityByName(String name);
-    /**
-     * get all entity
-     * @return list of certificates.
-     */
-    List<E> listItems();
+
+
 
     /**
      * delete entity by id

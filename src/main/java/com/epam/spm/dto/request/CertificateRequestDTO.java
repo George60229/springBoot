@@ -1,8 +1,8 @@
-package com.epam.spm.dto;
+package com.epam.spm.dto.request;
 
 import java.math.BigDecimal;
 
-public class RequestCertificateDTO {
+public class CertificateRequestDTO {
     private String name;
     private String description;
     private BigDecimal price;

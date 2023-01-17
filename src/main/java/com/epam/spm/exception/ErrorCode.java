@@ -1,22 +1,33 @@
 package com.epam.spm.exception;
 
+import org.springframework.http.HttpStatus;
+
 public enum ErrorCode {
-    CERTIFICATE_NOT_FOUND(40401, "Certificate is not found"), TAG_NOT_FOUND(40402, "Tag is not found");
-    //todo fix it to one exception
 
-    private final int code;
-    private final String message;
+    CERTIFICATE_NOT_FOUND(40401, "Certificate is not found", HttpStatus.NOT_FOUND),
+    TAG_NOT_FOUND(40402, "Tag is not found", HttpStatus.NOT_FOUND);
+    //todo error code
 
-    ErrorCode(int code, String message) {
-        this.code = code;
-        this.message = message;
+
+    private final int errorCode;
+    private final String errorMessage;
+    private final HttpStatus status;
+
+    public HttpStatus getStatus() {
+        return status;
+    }
+
+    ErrorCode(int code, String message, HttpStatus status) {
+        this.errorCode = code;
+        this.errorMessage = message;
+        this.status = status;
     }
 
     public int getCode() {
-        return code;
+        return errorCode;
     }
 
     public String getMessage() {
-        return message;
+        return errorMessage;
     }
 }

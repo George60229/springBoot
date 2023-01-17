@@ -3,7 +3,7 @@ package com.epam.spm.exception;
 public class Response {
 
     private String message;
-    private int code;
+    private int code;//name error
 
     public Response() {
     }

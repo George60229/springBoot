@@ -1,29 +1,30 @@
 package com.epam.spm.dao;
 
-import com.epam.spm.dto.RequestCertificateDTO;
 import com.epam.spm.model.GiftCertificate;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.epam.spm.utils.SortParameter;
+import com.epam.spm.utils.SortWay;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CertificateDAO extends EntityDAO<GiftCertificate> {
 
     /**
      * edit entity by id
      *
-     * @param id          id of changed entity
+     *        id of changed entity
      * @param certificate a list of changed fields
      * @return result this operation(successful or not).
      */
-    GiftCertificate editById(int id, RequestCertificateDTO certificate);
+    GiftCertificate update( GiftCertificate certificate);
 
     /**
      * get all entity ordered by desc
      *
      * @return list of certificates.
      */
-    List<GiftCertificate> listItemsDESC();
+    List<GiftCertificate> listItems(SortParameter sortParameter, SortWay sortWay);
 
     /**
      * get all entity by description
@@ -31,34 +32,21 @@ public interface CertificateDAO extends EntityDAO<GiftCertificate> {
      * @return list of certificates.
      */
 
-    List<GiftCertificate> getEntityByDescription(String description);
+  List<GiftCertificate> getCertificateByDescription(String description);
 
     /**
      * get all entity ordered by date asc
      *
      * @return list of certificates.
      */
-    List<GiftCertificate> listItemsDateASC();
 
-    /**
-     * get all entity ordered by date desc
-     *
-     * @return list of certificates.
-     */
-    List<GiftCertificate> listItemsDateDESC();
 
-    /**
-     * get all certificates with this tag
-     *
-     * @param tagName name of founded tag
-     * @return list of certificates.
-     */
 
     List<GiftCertificate> findByTagName(String tagName);
 
-    GiftCertificate getCertificateById(@RequestParam int id);
+    Optional<GiftCertificate> getCertificateById(@RequestParam int id);
 
-    GiftCertificate createCertificate(@RequestBody RequestCertificateDTO certificateDTO);
+    GiftCertificate createCertificate(GiftCertificate certificateDTO);
 
 
 }

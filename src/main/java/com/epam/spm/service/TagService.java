@@ -1,16 +1,19 @@
 package com.epam.spm.service;
 
-import com.epam.spm.dto.RequestTagDTO;
-import com.epam.spm.dto.ResponseTagDTO;
-import com.epam.spm.model.GiftCertificate;
+import com.epam.spm.dto.request.TagRequestDTO;
+import com.epam.spm.dto.response.TagResponseDTO;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
 public interface TagService {
-    List<ResponseTagDTO> getTagByName(String name);
-    ResponseTagDTO createTag(@RequestBody RequestTagDTO tagDTO);
-    List<ResponseTagDTO> getAllTags();
+    List<TagResponseDTO> getTagByName(String name);
+    TagResponseDTO createTag(@RequestBody TagRequestDTO tagDTO);
+    List<TagResponseDTO> getAllTags();
+
+    void deleteById(int id);
+
+    TagResponseDTO getById(int id);
 
 
 }

@@ -11,7 +11,7 @@ public class AppControllerAdvice {
     @ExceptionHandler(AppNotFoundException.class)
     public ResponseEntity<Response> handleException(AppNotFoundException e) {
         Response response = new Response(e.getMessage(),e.getErrorCode().getCode());
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response,ErrorCode.CERTIFICATE_NOT_FOUND.getStatus());
     }
 
 

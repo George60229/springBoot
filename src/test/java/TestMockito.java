@@ -1,4 +1,4 @@
-import com.epam.spm.dto.ResponseCertificateDTO;
+import com.epam.spm.dto.response.ResponseCertificateDTO;
 import com.epam.spm.converter.CertificateConverter;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,9 +46,9 @@ public class TestMockito {
         certificates.add(certificate);
 
 
-        Mockito.doReturn(responseCertificateDTOList).when(serviceMockito).convertToDTO(certificates);
+        Mockito.doReturn(responseCertificateDTOList).when(serviceMockito).convertListToDTO(certificates);
 
-        assertEquals(responseCertificateDTOList, serviceMockito.convertToDTO(certificates));
+        assertEquals(responseCertificateDTOList, serviceMockito.convertListToDTO(certificates));
     }
 
 }

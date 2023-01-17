@@ -1,4 +1,4 @@
-package com.epam.spm.dto;
+package com.epam.spm.dto.response;
 
 
 import java.math.BigDecimal;
@@ -15,9 +15,9 @@ public class ResponseCertificateDTO {
     private BigDecimal price;
     private int duration;
 
-    private LocalDate createDate;//default
+    private String createDate;//default
 
-    private LocalDate lastUpdateDate;//default LocalDateTime
+    private String lastUpdateDate;//default LocalDateTime
     //change to dateTime in db
 
     private List<String> tags = new ArrayList<>();
@@ -62,19 +62,19 @@ public class ResponseCertificateDTO {
         this.duration = duration;
     }
 
-    public LocalDate getCreateDate() {
+    public String getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(LocalDate createDate) {
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
 
-    public LocalDate getLastUpdateDate() {
+    public String getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
+    public void setLastUpdateDate(String lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 
@@ -86,4 +86,17 @@ public class ResponseCertificateDTO {
         this.tags = tags;
     }
 
+    @Override
+    public String toString() {
+        return "ResponseCertificateDTO{" +
+                "certificateId=" + certificateId +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", duration=" + duration +
+                ", createDate=" + createDate +
+                ", lastUpdateDate=" + lastUpdateDate +
+                ", tags=" + tags +
+                '}';
+    }
 }

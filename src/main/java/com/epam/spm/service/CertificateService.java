@@ -1,7 +1,9 @@
 package com.epam.spm.service;
 
-import com.epam.spm.dto.RequestCertificateDTO;
-import com.epam.spm.dto.ResponseCertificateDTO;
+import com.epam.spm.dto.request.CertificateRequestDTO;
+import com.epam.spm.dto.response.ResponseCertificateDTO;
+import com.epam.spm.utils.SortParameter;
+import com.epam.spm.utils.SortWay;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,7 +23,9 @@ public interface CertificateService {
      *
      * @return list of certificates.
      */
-    List<ResponseCertificateDTO> listCertificates();
+    List<ResponseCertificateDTO> getCertificateByDescription(String description);
+
+    List<ResponseCertificateDTO> listCertificates(SortParameter parameter, SortWay sortWay);
 
     /**
      * delete entity by id
@@ -43,7 +47,7 @@ public interface CertificateService {
     List<ResponseCertificateDTO> findByTagName(String tagName);
 
     ResponseCertificateDTO getCertificateById(@RequestParam int id);
-    List<ResponseCertificateDTO> listItemsDESC();
+
 
     /**
      * get all entity by description
@@ -51,24 +55,23 @@ public interface CertificateService {
      * @return list of certificates.
      */
 
-    List<ResponseCertificateDTO> getEntityByDescription(String description);
+
 
     /**
      * get all entity ordered by date asc
      *
      * @return list of certificates.
      */
-    List<ResponseCertificateDTO> listItemsDateASC();
+
 
     /**
      * get all entity ordered by date desc
      *
      * @return list of certificates.
      */
-    List<ResponseCertificateDTO> listItemsDateDESC();
 
-    ResponseCertificateDTO editById(int id, RequestCertificateDTO certificate);
-    ResponseCertificateDTO createCertificate(@RequestBody RequestCertificateDTO certificateDTO);
+    ResponseCertificateDTO editById(int id, CertificateRequestDTO certificate);
+    ResponseCertificateDTO createCertificate(@RequestBody CertificateRequestDTO certificateDTO);
 
 
 

@@ -2,10 +2,14 @@ package com.epam.spm.service.impl;
 
 import com.epam.spm.converter.CertificateConverter;
 import com.epam.spm.dao.CertificateDAO;
-import com.epam.spm.dto.RequestCertificateDTO;
-import com.epam.spm.dto.ResponseCertificateDTO;
+import com.epam.spm.dto.request.CertificateRequestDTO;
+import com.epam.spm.dto.response.ResponseCertificateDTO;
+import com.epam.spm.exception.AppNotFoundException;
+import com.epam.spm.exception.ErrorCode;
 import com.epam.spm.model.GiftCertificate;
 import com.epam.spm.service.CertificateService;
+import com.epam.spm.utils.SortParameter;
+import com.epam.spm.utils.SortWay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +24,11 @@ public class CertificateServiceImpl implements CertificateService {
 
 
     @Override
-    public List<ResponseCertificateDTO> listCertificates() {
-        List<GiftCertificate> certificateDTOList = certificateDAO.listItems();
+    public List<ResponseCertificateDTO> listCertificates(SortParameter parameter, SortWay sortWay) {
 
-        return converter.convertToDTO(removeSame(certificateDTOList));
+        List<GiftCertificate> certificateDTOList = certificateDAO.listItems(parameter,sortWay);
+
+        return converter.convertListToDTO(certificateDTOList);
     }
 
     @Override
@@ -38,68 +43,45 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public List<ResponseCertificateDTO> findByTagName(String tagName) {
-        return converter.convertToDTO(removeSame(certificateDAO.findByTagName(tagName)));
+        return converter.convertListToDTO(certificateDAO.findByTagName(tagName));
     }
 
     @Override
     public ResponseCertificateDTO getCertificateById(int id) {
-        return converter.convertOneToDTO(certificateDAO.getCertificateById(id));
+
+        if(certificateDAO.getCertificateById(id).isEmpty()){
+            throw new AppNotFoundException("Certificate with this id "+id+" is not found", ErrorCode.CERTIFICATE_NOT_FOUND);
+        }
+        GiftCertificate giftCertificate=certificateDAO.getCertificateById(id).get();
+
+        return converter.convertToDTO(giftCertificate);
     }
 
     @Override
-    public List<ResponseCertificateDTO> listItemsDESC() {
-        return converter.convertToDTO(removeSame(certificateDAO.listItemsDESC()));
+    public ResponseCertificateDTO editById(int id, CertificateRequestDTO certificateDTO) {
+
+        if (certificateDAO.getCertificateById(id).isEmpty()) {
+            throw new AppNotFoundException("Certificate with this id is not found: " + id, ErrorCode.CERTIFICATE_NOT_FOUND);
+        }
+
+        GiftCertificate giftCertificate = certificateDAO.getCertificateById(id).get();
+
+        return converter.convertToDTO(certificateDAO.update(converter.updateByRequest(giftCertificate, certificateDTO)));//todo updateByRequest
     }
 
     @Override
-    public List<ResponseCertificateDTO> getEntityByDescription(String description) {
-        return converter.convertToDTO(removeSame(certificateDAO.getEntityByDescription(description)));
-    }
-
-    @Override
-    public List<ResponseCertificateDTO> listItemsDateASC() {
-        return converter.convertToDTO(removeSame(certificateDAO.listItemsDateASC()));
-    }
-
-    @Override
-    public List<ResponseCertificateDTO> listItemsDateDESC() {
-        return converter.convertToDTO(removeSame(certificateDAO.listItemsDateDESC()));
-    }
-
-    @Override
-    public ResponseCertificateDTO editById(int id, RequestCertificateDTO certificate) {
-        return converter.convertOneToDTO(certificateDAO.editById(id, certificate));
-    }
-
-    @Override
-    public ResponseCertificateDTO createCertificate(RequestCertificateDTO certificateDTO) {
-        return converter.convertOneToDTO(certificateDAO.createCertificate(certificateDTO));
+    public ResponseCertificateDTO createCertificate(CertificateRequestDTO certificateDTO) {
+        return converter.convertToDTO(certificateDAO.createCertificate(converter.convertDTOtoModel(certificateDTO)));
     }
 
     @Override
     public List<ResponseCertificateDTO> getCertificateByName(String name) {
-        return converter.convertToDTO(removeSame(certificateDAO.getEntityByName(name)));
+        return converter.convertListToDTO(certificateDAO.getEntityByName(name));
     }
 
-    private List<GiftCertificate> removeSame(List<GiftCertificate> certificates) {
-
-        List<GiftCertificate> result = new ArrayList<>();
-        Set<Integer> idList = new HashSet<>();
-        certificates.sort(Comparator.comparing(GiftCertificate::getId));
-
-        for (GiftCertificate certificate : certificates) {
-            if (!idList.contains(certificate.getId())) {
-                idList.add(certificate.getId());
-                result.add(certificate);
-            } else {
-                int res = idList.size() - 1;
-                GiftCertificate newCertificate = result.get(res);
-                result.remove(res);
-                newCertificate.addTag(certificate.getTags().get(0));
-                result.add(newCertificate);
-            }
-        }
-        return result;
+    @Override
+    public List<ResponseCertificateDTO> getCertificateByDescription(String description) {
+        return converter.convertListToDTO(certificateDAO.getCertificateByDescription(description));
     }
 
 

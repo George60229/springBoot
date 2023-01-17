@@ -1,7 +1,6 @@
-import com.epam.spm.dto.ResponseTagDTO;
+import com.epam.spm.dto.response.TagResponseDTO;
 import com.epam.spm.model.Tag;
 import com.epam.spm.converter.TagConverter;
-import com.epam.spm.converter.impl.TagConverterImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -27,20 +26,20 @@ public class TestTag {
     @Test
     public void testTagToDB() {
 
-        ResponseTagDTO expectedResponseTagDTO = new ResponseTagDTO();
-        expectedResponseTagDTO.setId(1);
-        expectedResponseTagDTO.setName("test");
+        TagResponseDTO expectedTagResponseDTO = new TagResponseDTO();
+        expectedTagResponseDTO.setId(1);
+        expectedTagResponseDTO.setName("test");
         Tag tag = new Tag();
         tag.setId(1);
         tag.setName("test");
 
         List<Tag> tags = new ArrayList<>();
         tags.add(tag);
-        TagConverter service = new TagConverterImpl();
-        List<ResponseTagDTO> resDTO = service.convert(tags);
-        ResponseTagDTO res = resDTO.get(0);
-        assertEquals(res.getId(), expectedResponseTagDTO.getId());
-        assertEquals(res.getName(), expectedResponseTagDTO.getName());
+        TagConverter service = new TagConverter();
+        List<TagResponseDTO> resDTO = service.convert(tags);
+        TagResponseDTO res = resDTO.get(0);
+        assertEquals(res.getId(), expectedTagResponseDTO.getId());
+        assertEquals(res.getName(), expectedTagResponseDTO.getName());
 
 
     }

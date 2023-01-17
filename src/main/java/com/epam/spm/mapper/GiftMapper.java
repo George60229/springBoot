@@ -25,8 +25,13 @@ public class GiftMapper implements RowMapper<GiftCertificate> {
         String tagName = rs.getString("tag_name");
         tagIdList.add(tagName);
         certificate.setTags(tagIdList);
-        certificate.setCreateDate(rs.getTimestamp("create_date").toLocalDateTime().toLocalDate());
-        certificate.setLastUpdateDate(rs.getTimestamp("last_update_date").toLocalDateTime().toLocalDate());
+        if (rs.getDate("create_date") != null) {
+            certificate.setCreateDate(rs.getTimestamp("create_date").toLocalDateTime());
+        }
+        if (rs.getDate("last_update_date") != null) {
+            certificate.setLastUpdateDate(rs.getTimestamp("last_update_date").toLocalDateTime());
+
+        }
 
 
         return certificate;

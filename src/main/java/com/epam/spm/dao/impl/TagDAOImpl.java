@@ -2,18 +2,14 @@ package com.epam.spm.dao.impl;
 
 
 import com.epam.spm.dao.TagDAO;
-import com.epam.spm.dto.RequestTagDTO;
 import com.epam.spm.exception.AppNotFoundException;
 import com.epam.spm.exception.ErrorCode;
 import com.epam.spm.mapper.TagMapper;
 import com.epam.spm.model.Tag;
+import com.epam.spm.dao.enumeration.CertificateParameters;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,21 +20,32 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
         setDataSource(dataSource);
     }
 
-    public Tag create(RequestTagDTO tag) {
-
+    public Tag create(Tag tag) {
 
 
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("tages").usingGeneratedKeyColumns("tag_id");
 
         Map<String, Object> parameters = new HashMap<>(1);
-        parameters.put("name",tag.getName());
+        parameters.put(CertificateParameters.NAME.getMessage(), tag.getName());
         int newId = (int) simpleJdbcInsert.executeAndReturnKey(parameters);
-        Tag result=new Tag();
+        Tag result = new Tag();
         result.setName(tag.getName());
         result.setId(newId);
         return result;
 
+    }
+
+    @Override
+    public List<Tag> getAllTags() {
+        String SQL = "select * from tages order by name ASC";
+        return jdbcTemplateObject.query(SQL, new TagMapper());
+    }
+
+    @Override
+    public Tag getById(int id) {
+        String SQL = "select * from tages where id=" + id;
+        return jdbcTemplateObject.queryForObject(SQL, new TagMapper());
     }
 
 
@@ -50,13 +57,6 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
             throw new AppNotFoundException("Tag with this name is not found" + name, ErrorCode.TAG_NOT_FOUND);
         }
         return result;
-    }
-
-    @Override
-    public List<Tag> listItems() {
-        String SQL = "select * from tages order by name ASC";
-        return jdbcTemplateObject.query(SQL, new TagMapper());
-
     }
 
 

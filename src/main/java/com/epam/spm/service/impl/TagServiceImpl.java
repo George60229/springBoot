@@ -2,8 +2,8 @@ package com.epam.spm.service.impl;
 
 import com.epam.spm.converter.TagConverter;
 import com.epam.spm.dao.TagDAO;
-import com.epam.spm.dto.RequestTagDTO;
-import com.epam.spm.dto.ResponseTagDTO;
+import com.epam.spm.dto.request.TagRequestDTO;
+import com.epam.spm.dto.response.TagResponseDTO;
 import com.epam.spm.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,17 +20,27 @@ public class TagServiceImpl implements TagService {
 
 
     @Override
-    public List<ResponseTagDTO> getTagByName(String name) {
+    public List<TagResponseDTO> getTagByName(String name) {
         return converter.convert(tagDAO.getEntityByName(name));
     }
 
     @Override
-    public ResponseTagDTO createTag(RequestTagDTO tagDTO) {
-        return converter.convertOneToDTO(tagDAO.create(tagDTO));
+    public TagResponseDTO createTag(TagRequestDTO tagDTO) {
+        return converter.convertOneToDTO(tagDAO.create(converter.convertDTOtoModel(tagDTO)));
     }
 
     @Override
-    public List<ResponseTagDTO> getAllTags() {
-        return converter.convert(tagDAO.listItems());
+    public List<TagResponseDTO> getAllTags() {
+        return converter.convert(tagDAO.getAllTags());
+    }
+
+    @Override
+    public void deleteById(int id) {
+        tagDAO.deleteById(id);
+    }
+
+    @Override
+    public TagResponseDTO getById(int id) {
+        return converter.convertOneToDTO(tagDAO.getById(id));
     }
 }

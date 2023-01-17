@@ -1,21 +1,20 @@
 package com.epam.spm.dao.impl;
 
 import com.epam.spm.dao.CertificateDAO;
-import com.epam.spm.dto.RequestCertificateDTO;
 import com.epam.spm.exception.AppNotFoundException;
 import com.epam.spm.exception.ErrorCode;
+
 import com.epam.spm.mapper.GiftMapper;
 import com.epam.spm.model.GiftCertificate;
-import com.epam.spm.model.Tag;
+import com.epam.spm.dao.enumeration.CertificateParameters;
+import com.epam.spm.utils.SortParameter;
+import com.epam.spm.utils.SortWay;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 
 import javax.sql.DataSource;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO {
 
@@ -29,7 +28,8 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
             "    FROM certificates\n" +
             "             FULL JOIN certificates_to_tages on certificates.certificate_id = certificates_to_tages.certificate_id\n" +
             ")\n" +
-            "            select  certificate_info.name as certificate_name ,certificate_info.certificate_id,create_date, description, duration, last_update_date, tages.name AS tag_name, price, tages.tag_id\n" +
+            "            select  certificate_info.name as certificate_name ,certificate_info.certificate_id,create_date," +
+            " description, duration, last_update_date, tages.name AS tag_name, price, tages.tag_id\n" +
             "            from certificate_info left join tages on certificate_info.tag_id=tages.tag_id ";
 
 
@@ -51,24 +51,36 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
 
     }
 
-    @Override
-    public List<GiftCertificate> getEntityByDescription(String description) {
 
+    @Override
+    public List<GiftCertificate> listItems(SortParameter parameter, SortWay sortWay) {
+        if (parameter == null) {
+            parameter = SortParameter.NAME;
+        }
+        if (sortWay == null) {
+            sortWay = SortWay.ASC;
+        }
+        String sqlQueue = "";
+        if (parameter.name().equals("NAME")) {
+            sqlQueue = FIND_ALL_QUEUE + "order by certificate_info.name " + sortWay;
+        }
+        if (parameter.name().equals("DATE")) {
+            sqlQueue = FIND_ALL_QUEUE + "order by certificate_info.create_date " + sortWay;
+        }
+
+
+        return removeSame(jdbcTemplateObject.query(sqlQueue, new GiftMapper()));
+
+    }
+
+    @Override
+    public List<GiftCertificate> getCertificateByDescription(String description) {
         String SQL = "SELECT certificates.certificate_id,create_date, description, duration, last_update_date, name, price, tag_id\n" +
                 "FROM certificates\n" +
                 "         FULL JOIN certificates_to_tages on certificates.certificate_id = certificates_to_tages.certificate_id\n" +
                 "where certificates.name='" + description + "'";
 
         return jdbcTemplateObject.query(SQL, new GiftMapper());
-
-    }
-
-
-    @Override
-    public List<GiftCertificate> listItems() {
-        String sqlQueue = FIND_ALL_QUEUE + "order by certificate_info.name ASC ";
-        return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
-
     }
 
     @Override
@@ -90,100 +102,108 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
     }
 
     @Override
-    public GiftCertificate editById(int id, RequestCertificateDTO certificate) {
+    public GiftCertificate update(GiftCertificate certificate) {
+
+        String getCreateDateSql = FIND_ALL_QUEUE + " where certificate_id=" + certificate.getId();
+
+        GiftCertificate giftCertificateFromDB = jdbcTemplateObject.queryForObject(getCreateDateSql, new GiftMapper());
+//fix
+        if (giftCertificateFromDB == null) {
+            throw new AppNotFoundException("Certificate with this id " + certificate.getId() + "is not found", ErrorCode.CERTIFICATE_NOT_FOUND);
+        }
+        //service layer
+
+
         String sqlQueue = "UPDATE certificates" + " SET";
-
-
-        sqlQueue += " last_update__date =" + LocalDateTime.now() + ",";
-
-        if (certificate.getDescription() != null) {
-            sqlQueue += " description =" + certificate.getDescription() + ",";
-        }
-        if (certificate.getDuration() != 0) {
-            sqlQueue += " duration=" + certificate.getDuration() + ",";
-        }
-        if (certificate.getName() != null) {
-            sqlQueue += " name='" + certificate.getName() + "',";
-        }
-        if (certificate.getPrice() != null) {
-            sqlQueue += " price='" + certificate.getName() + "',";
-        }
+        LocalDateTime date = LocalDateTime.now();
+        sqlQueue += " last_update_date ='" + date + "',";
+        sqlQueue += " description ='" + certificate.getDescription() + "',";
+        sqlQueue += " duration=" + certificate.getDuration() + ",";
+        sqlQueue += " name='" + certificate.getName() + "',";
+        sqlQueue += " price='" + certificate.getPrice() + "',";
         sqlQueue = sqlQueue.substring(0, sqlQueue.length() - 1);
-        if (jdbcTemplateObject.update(sqlQueue) == 0) {
-            throw new AppNotFoundException("Field is not edited" + certificate, ErrorCode.CERTIFICATE_NOT_FOUND);
-        }
-        GiftCertificate result = new GiftCertificate();
-        result.setDescription(certificate.getDescription());
-        result.setName(certificate.getName());
-        result.setId(id);
-        result.setPrice(certificate.getPrice());
-        result.setDuration(certificate.getDuration());
-        result.setLastUpdateDate(LocalDate.now());
-        result.setCreateDate(LocalDate.now());
-        return result;
+        sqlQueue += " where certificate_id=" + certificate.getId();
+        jdbcTemplateObject.update(sqlQueue);
+
+        String getEntitySql = FIND_ALL_QUEUE + " where certificate_id=" + certificate.getId();
+
+        return jdbcTemplateObject.queryForObject(getEntitySql, new GiftMapper());
     }
 
-    @Override
-    public List<GiftCertificate> listItemsDESC() {
-        String sqlQueue = FIND_ALL_QUEUE + "order by create_date DESC ";
-        return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
-
-    }
-
-    @Override
-    public List<GiftCertificate> listItemsDateASC() {
-        String sqlQueue = FIND_ALL_QUEUE + "order by create_date ASC ";
-        return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
-
-    }
-
-    @Override
-    public List<GiftCertificate> listItemsDateDESC() {
-        String sqlQueue = FIND_ALL_QUEUE + "order by create_date DESC ";
-        return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
-
-    }
 
     @Override
     public List<GiftCertificate> findByTagName(String tagName) {
-        String sqlQueue = "WITH info AS (\n" +
-                "    SELECT certificates.certificate_id,create_date, description, duration, last_update_date, name, price,tag_id\n" +
-                "    FROM certificates\n" +
-                "             FULL JOIN certificates_to_tages on certificates.certificate_id = certificates_to_tages.certificate_id\n" +
-                ")\n" +
-                "SELECT info.certificate_id,create_date, description, duration, last_update_date, info.name, price,tages.tag_id, tages.name\n" +
-                "FROM info\n" +
-                "         FULL JOIN tages on info.tag_id = tages.tag_id where tages.name='" + tagName + "'";
+        String sqlQueue = FIND_ALL_QUEUE + " where tages.name='" + tagName + "'";
         return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
 
     }
 
     @Override
-    public GiftCertificate getCertificateById(int id) {
-        String sqlQueue = "select * from certificate where id=" + id;
-        return jdbcTemplateObject.queryForObject(sqlQueue, new GiftMapper());
+    public Optional<GiftCertificate> getCertificateById(int id) {
+        String sqlQueue = FIND_ALL_QUEUE + " where certificate_id=" + id;
+        return Optional.ofNullable(fixToOne(jdbcTemplateObject.query(sqlQueue, new GiftMapper())));
 
     }
 
     @Override
-    public GiftCertificate createCertificate(RequestCertificateDTO certificateDTO) {
+    public GiftCertificate createCertificate(GiftCertificate giftCertificate) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("certificates").usingGeneratedKeyColumns("certificate_id");
 
         Map<String, Object> parameters = new HashMap<>(1);
-        parameters.put("description", certificateDTO.getDescription());
-        parameters.put("duration", certificateDTO.getDuration());
-        parameters.put("price", certificateDTO.getPrice());
-        parameters.put("name", certificateDTO.getName());
+        parameters.put(CertificateParameters.DESCRIPTION.getMessage(), giftCertificate.getDescription());
+        parameters.put(CertificateParameters.DURATION.getMessage(), giftCertificate.getDuration());
+        parameters.put(CertificateParameters.PRICE.getMessage(), giftCertificate.getPrice());
+        parameters.put(CertificateParameters.NAME.getMessage(), giftCertificate.getName());
+        LocalDateTime date = LocalDateTime.now();
+        parameters.put(CertificateParameters.CREATE_DATE.getMessage(), date);
         int newId = (int) simpleJdbcInsert.executeAndReturnKey(parameters);
-        GiftCertificate result = new GiftCertificate();
-        result.setName(certificateDTO.getName());
-        result.setPrice(certificateDTO.getPrice());
-        result.setDuration(certificateDTO.getDuration());
-        result.setDescription(certificateDTO.getDescription());
-        result.setLastUpdateDate(LocalDate.now());
-        result.setCreateDate(LocalDate.now());
-        result.setId(newId);
-        return result;
+
+
+        String sqlQueue = FIND_ALL_QUEUE + " where certificate_id=" + newId;
+        return jdbcTemplateObject.queryForObject(sqlQueue, new GiftMapper());
     }
+
+    private List<GiftCertificate> removeSame(List<GiftCertificate> certificates) {
+
+        List<GiftCertificate> result = new ArrayList<>();
+        Set<Integer> idList = new HashSet<>();
+        certificates.sort(Comparator.comparing(GiftCertificate::getId));
+
+        for (GiftCertificate certificate : certificates) {
+            if (!idList.contains(certificate.getId())) {
+                idList.add(certificate.getId());
+                result.add(certificate);
+            } else {
+                int res = idList.size() - 1;
+                GiftCertificate newCertificate = result.get(res);
+                result.remove(res);
+                newCertificate.addTag(certificate.getTags().get(0));
+                result.add(newCertificate);
+            }
+        }
+        return result;
+
+    }
+
+    private GiftCertificate fixToOne(List<GiftCertificate> certificates) {
+        if(certificates.size()==0){
+            return null;
+        }
+
+        GiftCertificate result = certificates.get(0);
+
+
+
+
+        for (GiftCertificate certificate : certificates) {
+
+            result.addTag(certificate.getTags().get(0));
+        }
+
+        return result;
+
+    }
+
+
 }

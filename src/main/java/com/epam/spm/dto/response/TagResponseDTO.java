@@ -1,6 +1,6 @@
-package com.epam.spm.dto;
+package com.epam.spm.dto.response;
 
-public class ResponseTagDTO {
+public class TagResponseDTO {
     private Integer tagId;
     //shift+f6;
 
