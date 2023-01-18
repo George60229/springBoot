@@ -17,12 +17,7 @@ public class TagController {
     @Autowired
     private TagService tagService;
 
-    @GetMapping("/getTag")
-    public List<TagResponseDTO> getTag(@RequestParam String name) {
 
-
-        return tagService.getTagByName(name);
-    }
 
     @GetMapping("/getTagById{id}")
     public TagResponseDTO getTagByID(@PathVariable(value = "id") int id) {

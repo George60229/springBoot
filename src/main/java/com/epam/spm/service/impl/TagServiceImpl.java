@@ -19,10 +19,7 @@ public class TagServiceImpl implements TagService {
     TagConverter converter;
 
 
-    @Override
-    public List<TagResponseDTO> getTagByName(String name) {
-        return converter.convert(tagDAO.getEntityByName(name));
-    }
+
 
     @Override
     public TagResponseDTO createTag(TagRequestDTO tagDTO) {

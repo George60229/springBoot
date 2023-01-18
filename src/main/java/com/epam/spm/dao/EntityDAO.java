@@ -2,17 +2,11 @@ package com.epam.spm.dao;
 
 
 
-import java.util.List;
+
 
 public interface EntityDAO<E> {
 
-    /**
-     * get entity by name
-     *
-     * @param name just name
-     * @return list of certificates.
-     */
-    List<E> getEntityByName(String name);
+
 
 
 

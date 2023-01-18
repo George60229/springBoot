@@ -2,30 +2,30 @@ package com.epam.spm.exception;
 
 public class Response {
 
-    private String message;
-    private int code;//name error
+    private String errorMessage;
+    private int errorCode;
 
     public Response() {
     }
 
-    public Response(String message,int code) {
-        this.message = message;
-        this.code=code;
+    public Response(String errorMessage,int errorCode) {
+        this.errorMessage = errorMessage;
+        this.errorCode=errorCode;
     }
 
     public String getMessage() {
-        return message;
+        return errorMessage;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.errorMessage = message;
     }
 
     public int getCode() {
-        return code;
+        return errorCode;
     }
 
     public void setCode(int code) {
-        this.code = code;
+        this.errorCode = code;
     }
 }

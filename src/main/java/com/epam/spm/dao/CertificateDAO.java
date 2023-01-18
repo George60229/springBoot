@@ -1,5 +1,6 @@
 package com.epam.spm.dao;
 
+import com.epam.spm.dto.request.CertificateFindByDTO;
 import com.epam.spm.model.GiftCertificate;
 import com.epam.spm.utils.SortParameter;
 import com.epam.spm.utils.SortWay;
@@ -11,11 +12,9 @@ import java.util.Optional;
 public interface CertificateDAO extends EntityDAO<GiftCertificate> {
 
     /**
-     * edit entity by id
      *
-     *        id of changed entity
      * @param certificate a list of changed fields
-     * @return result this operation(successful or not).
+     * @return result this operation
      */
     GiftCertificate update( GiftCertificate certificate);
 
@@ -24,7 +23,7 @@ public interface CertificateDAO extends EntityDAO<GiftCertificate> {
      *
      * @return list of certificates.
      */
-    List<GiftCertificate> listItems(SortParameter sortParameter, SortWay sortWay);
+    List<GiftCertificate> listItems(CertificateFindByDTO certificateFindByDTO);
 
     /**
      * get all entity by description
@@ -32,20 +31,30 @@ public interface CertificateDAO extends EntityDAO<GiftCertificate> {
      * @return list of certificates.
      */
 
-  List<GiftCertificate> getCertificateByDescription(String description);
 
     /**
-     * get all entity ordered by date asc
+     * get all entity by description
      *
      * @return list of certificates.
      */
 
 
-
     List<GiftCertificate> findByTagName(String tagName);
+
+    /**
+     *
+     * @param id just id founded entity
+     * @return result from DB
+     */
 
     Optional<GiftCertificate> getCertificateById(@RequestParam int id);
 
+
+    /**
+     *
+     * @param certificateDTO createdOperation
+     * @return result from DB
+     */
     GiftCertificate createCertificate(GiftCertificate certificateDTO);
 
 

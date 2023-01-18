@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/2561d0a9-38e3-434b-83b4-9153b8d5d617/console_10.sql" dialect="PostgreSQL" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/2561d0a9-38e3-434b-83b4-9153b8d5d617/console_7.sql" dialect="PostgreSQL" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/2561d0a9-38e3-434b-83b4-9153b8d5d617/console_9.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/epam/spm/dao/impl/CertificateDAOImpl.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/epam/spm/dao/impl/TagDAOImpl.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/create.sql" dialect="PostgreSQL" />

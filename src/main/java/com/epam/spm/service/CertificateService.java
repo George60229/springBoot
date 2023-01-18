@@ -1,5 +1,6 @@
 package com.epam.spm.service;
 
+import com.epam.spm.dto.request.CertificateFindByDTO;
 import com.epam.spm.dto.request.CertificateRequestDTO;
 import com.epam.spm.dto.response.ResponseCertificateDTO;
 import com.epam.spm.utils.SortParameter;
@@ -16,16 +17,16 @@ public interface CertificateService {
      * @param name just name
      * @return list of certificates.
      */
-    List<ResponseCertificateDTO> getCertificateByName(String name);
+
 
     /**
      * get all entity
      *
      * @return list of certificates.
      */
-    List<ResponseCertificateDTO> getCertificateByDescription(String description);
 
-    List<ResponseCertificateDTO> listCertificates(SortParameter parameter, SortWay sortWay);
+
+    List<ResponseCertificateDTO> listCertificates(CertificateFindByDTO certificateFindByDTO);
 
     /**
      * delete entity by id

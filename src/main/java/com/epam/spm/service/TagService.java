@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 public interface TagService {
-    List<TagResponseDTO> getTagByName(String name);
+
     TagResponseDTO createTag(@RequestBody TagRequestDTO tagDTO);
     List<TagResponseDTO> getAllTags();
 

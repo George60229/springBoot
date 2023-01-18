@@ -38,7 +38,7 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
 
     @Override
     public List<Tag> getAllTags() {
-        String SQL = "select * from tages order by name ASC";
+        String SQL = "select * from tages order by name";
         return jdbcTemplateObject.query(SQL, new TagMapper());
     }
 
@@ -48,16 +48,6 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
         return jdbcTemplateObject.queryForObject(SQL, new TagMapper());
     }
 
-
-    @Override
-    public List<Tag> getEntityByName(String name) {
-        String SQL = "select * from tages where name='" + name + "'";
-        List<Tag> result = jdbcTemplateObject.query(SQL, new TagMapper());
-        if (result.size() == 0) {
-            throw new AppNotFoundException("Tag with this name is not found" + name, ErrorCode.TAG_NOT_FOUND);
-        }
-        return result;
-    }
 
 
     @Override

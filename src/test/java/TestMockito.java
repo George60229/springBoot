@@ -1,18 +1,16 @@
 import com.epam.spm.dto.response.ResponseCertificateDTO;
 import com.epam.spm.converter.CertificateConverter;
+import com.epam.spm.model.GiftCertificate;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-
 
 
 public class TestMockito {
@@ -33,21 +31,17 @@ public class TestMockito {
         expectedResponseCertificateDTO.setPrice(BigDecimal.valueOf(100));
         expectedResponseCertificateDTO.setDescription("nothing");
         expectedResponseCertificateDTO.setDuration(10);
-
-        com.epam.spm.model.GiftCertificate certificate=new com.epam.spm.model.GiftCertificate();
+        GiftCertificate certificate = new GiftCertificate();
         certificate.setId(1);
         certificate.setName("test");
         certificate.setPrice(BigDecimal.valueOf(100));
         certificate.setDescription("nothing");
         certificate.setDuration(10);
-        List<ResponseCertificateDTO> responseCertificateDTOList =new ArrayList<>();
+        List<ResponseCertificateDTO> responseCertificateDTOList = new ArrayList<>();
         responseCertificateDTOList.add(expectedResponseCertificateDTO);
-        List<com.epam.spm.model.GiftCertificate> certificates = new ArrayList<>();
+        List<GiftCertificate> certificates = new ArrayList<>();
         certificates.add(certificate);
-
-
         Mockito.doReturn(responseCertificateDTOList).when(serviceMockito).convertListToDTO(certificates);
-
         assertEquals(responseCertificateDTOList, serviceMockito.convertListToDTO(certificates));
     }
 
