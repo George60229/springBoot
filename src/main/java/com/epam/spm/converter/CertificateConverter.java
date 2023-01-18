@@ -13,7 +13,6 @@ import java.util.Objects;
 public class CertificateConverter {
 
 
-
     public List<ResponseCertificateDTO> convertListToDTO(List<GiftCertificate> certificates) {
 
         List<ResponseCertificateDTO> responseCertificateDTOList = new LinkedList<>();
@@ -34,10 +33,10 @@ public class CertificateConverter {
         responseCertificateDTO.setDescription(certificate.getDescription());
         responseCertificateDTO.setDuration(certificate.getDuration());
         responseCertificateDTO.setTags(certificate.getTags());
-        if(certificate.getCreateDate()!=null){
+        if (certificate.getCreateDate() != null) {
             responseCertificateDTO.setCreateDate(certificate.getCreateDate().toString());
         }
-        if(certificate.getLastUpdateDate()!=null){
+        if (certificate.getLastUpdateDate() != null) {
             responseCertificateDTO.setLastUpdateDate(certificate.getLastUpdateDate().toString());
         }
 
@@ -51,8 +50,10 @@ public class CertificateConverter {
         giftCertificate.setDescription(certificate.getDescription());
         giftCertificate.setDuration(certificate.getDuration());
         giftCertificate.setPrice(certificate.getPrice());
+        giftCertificate.setTags(certificate.getTags());
         return giftCertificate;
     }
+
     public GiftCertificate updateByRequest(GiftCertificate giftCertificate, CertificateRequestDTO certificateRequestDTO) {
         giftCertificate.setName(Objects.requireNonNullElse(certificateRequestDTO.getName(), giftCertificate.getName()));
         giftCertificate.setPrice(Objects.requireNonNullElse(certificateRequestDTO.getPrice(), giftCertificate.getPrice()));
@@ -60,14 +61,13 @@ public class CertificateConverter {
         if (giftCertificate.getDuration() == 0) {
             giftCertificate.setDuration(certificateRequestDTO.getDuration());
         }
+        if(certificateRequestDTO.getTags()!=null){
+            giftCertificate.setTags(certificateRequestDTO.getTags());
+        }
         return giftCertificate;
 
 
     }
-
-
-
-
 
 
 }

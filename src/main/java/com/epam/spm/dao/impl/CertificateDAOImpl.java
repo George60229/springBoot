@@ -7,8 +7,10 @@ import com.epam.spm.exception.BadRequestException;
 import com.epam.spm.exception.ErrorCode;
 
 import com.epam.spm.mapper.GiftMapper;
+import com.epam.spm.mapper.TagMapper;
 import com.epam.spm.model.GiftCertificate;
 import com.epam.spm.dao.enumeration.CertificateParameters;
+import com.epam.spm.model.Tag;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 
 
@@ -89,9 +91,6 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
     public GiftCertificate update(GiftCertificate certificate) {
 
 
-        //service layer
-
-
         String sqlQueue = "UPDATE certificates" + " SET";
         LocalDateTime date = LocalDateTime.now();
         sqlQueue += " last_update_date ='" + date + "',";
@@ -102,10 +101,9 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
         sqlQueue = sqlQueue.substring(0, sqlQueue.length() - 1);
         sqlQueue += " where certificate_id=" + certificate.getId();
         jdbcTemplateObject.update(sqlQueue);
-
+        addTags(certificate);
         String getEntitySql = FIND_ALL_QUEUE + " where certificate_id=" + certificate.getId();
-
-        return jdbcTemplateObject.queryForObject(getEntitySql, new GiftMapper());
+        return fixToOne(jdbcTemplateObject.query(getEntitySql, new GiftMapper()));
     }
 
 
@@ -136,10 +134,10 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
         LocalDateTime date = LocalDateTime.now();
         parameters.put(CertificateParameters.CREATE_DATE.getMessage(), date);
         int newId = (int) simpleJdbcInsert.executeAndReturnKey(parameters);
-
-
+        giftCertificate.setId(newId);
+        addTags(giftCertificate);
         String sqlQueue = FIND_ALL_QUEUE + " where certificate_id=" + newId;
-        return jdbcTemplateObject.queryForObject(sqlQueue, new GiftMapper());
+        return fixToOne(jdbcTemplateObject.query(sqlQueue, new GiftMapper()));
     }
 
     private List<GiftCertificate> removeSame(List<GiftCertificate> certificates) {
@@ -178,7 +176,27 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
         }
 
         return result;
+    }
+    private void addTags(GiftCertificate giftCertificate){
+        List<Tag> tagList = new ArrayList<>();
+        if (giftCertificate.getTags().size() != 0) {
+            for (int i = 0; i < giftCertificate.getTags().size(); i++) {
+                String tagSQL = "select * from tages where name='" + giftCertificate.getTags().get(i) + "'";
 
+                if (jdbcTemplateObject.query(tagSQL, new TagMapper()).isEmpty()) {
+                    String insertTagSQL = "insert into tages (name) values ('" + giftCertificate.getTags().get(i) + "')";
+                    jdbcTemplateObject.update(insertTagSQL);
+                }
+                tagList.addAll(jdbcTemplateObject.query(tagSQL, new TagMapper()));
+            }
+            String deleteCertificatesToTagsSql="delete from certificates_to_tages where certificate_id="+giftCertificate.getId();
+            jdbcTemplateObject.update(deleteCertificatesToTagsSql);
+            for (Tag tag : tagList) {
+                String insertToTagsToCertificates = "insert into certificates_to_tages(certificate_id,tag_id) " +
+                        "values(" + giftCertificate.getId() + "," + tag.getId() + ")";
+                jdbcTemplateObject.update(insertToTagsToCertificates);
+            }
+        }
     }
 
 

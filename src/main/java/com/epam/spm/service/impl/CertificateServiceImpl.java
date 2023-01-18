@@ -51,11 +51,12 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public ResponseCertificateDTO editById(int id, CertificateRequestDTO certificateDTO) {
 
-        if (certificateDAO.getCertificateById(id).isEmpty()) {
+        Optional<GiftCertificate> certificate = certificateDAO.getCertificateById(id);
+        if (certificate.isEmpty()) {
             throw new AppNotFoundException("Certificate with this id is not found: " + id, ErrorCode.CERTIFICATE_NOT_FOUND);
         }
 
-        GiftCertificate giftCertificate = certificateDAO.getCertificateById(id).get();
+        GiftCertificate giftCertificate = certificate.get();
         return converter.convertToDTO(certificateDAO.update(converter.updateByRequest(giftCertificate, certificateDTO)));
     }
 
@@ -67,8 +68,8 @@ public class CertificateServiceImpl implements CertificateService {
 
     @Override
     public List<ResponseCertificateDTO> listCertificates(CertificateFindByDTO certificateFindByDTO) {
-        if(certificateFindByDTO==null){
-            certificateFindByDTO=new CertificateFindByDTO();
+        if (certificateFindByDTO == null) {
+            certificateFindByDTO = new CertificateFindByDTO();
         }
         return converter.convertListToDTO(certificateDAO.listItems(certificateFindByDTO));
     }

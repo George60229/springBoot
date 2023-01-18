@@ -1,8 +1,8 @@
 package com.epam.spm.dto.request;
 
-import com.epam.spm.model.Tag;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CertificateRequestDTO {
@@ -11,7 +11,7 @@ public class CertificateRequestDTO {
     private BigDecimal price;
     private int duration;
 
-    private List<Tag> tags;
+    private List<String> tags=new ArrayList<>();
 
 
     //todo request rename
@@ -48,11 +48,11 @@ public class CertificateRequestDTO {
         this.duration = duration;
     }
 
-    public List<Tag> getTags() {
+    public List<String> getTags() {
         return tags;
     }
 
-    public void setTags(List<Tag> tags) {
+    public void setTags(List<String> tags) {
         this.tags = tags;
     }
 }
