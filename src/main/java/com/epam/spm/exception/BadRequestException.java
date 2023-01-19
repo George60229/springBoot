@@ -1,10 +1,11 @@
 package com.epam.spm.exception;
 
-public class BadRequestException extends IllegalArgumentException{
+public class BadRequestException extends IllegalArgumentException {
     private final ErrorCode errorCode;
-    public BadRequestException(String s,ErrorCode code) {
+
+    public BadRequestException(String s, ErrorCode code) {
         super(s);
-        this.errorCode=code;
+        this.errorCode = code;
 
     }
 

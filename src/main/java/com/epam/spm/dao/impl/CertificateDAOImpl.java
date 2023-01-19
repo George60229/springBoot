@@ -2,7 +2,6 @@ package com.epam.spm.dao.impl;
 
 import com.epam.spm.dao.CertificateDAO;
 import com.epam.spm.dto.request.CertificateFindByDTO;
-import com.epam.spm.exception.AppNotFoundException;
 import com.epam.spm.exception.BadRequestException;
 import com.epam.spm.exception.ErrorCode;
 
@@ -30,7 +29,7 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
             " price, " +
             "tag_id\n" +
             "    FROM certificates\n" +
-            "             FULL JOIN certificates_to_tages on" +
+            "              left JOIN certificates_to_tages on" +
             " certificates.certificate_id = certificates_to_tages.certificate_id\n" +
             ")\n" +
             "            select  " +
@@ -60,37 +59,27 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
         } else {
             sqlQueue = FIND_ALL_QUEUE;
         }
-
         if (certificateFindByDTO.getSortParameter().name().equals("NAME")) {
             sqlQueue += " order by certificate_info.name " + certificateFindByDTO.getSortWay();
         } else if (certificateFindByDTO.getSortParameter().name().equals("DATE")) {
             sqlQueue += " order by certificate_info.create_date " + certificateFindByDTO.getSortWay();
         }
-
-
         return removeSame(jdbcTemplateObject.query(sqlQueue, new GiftMapper()));
-
     }
 
 
     @Override
     public boolean deleteById(Integer id) {
+        String sql="delete from certificates_to_tages where certificate_id="+id;
+        jdbcTemplateObject.update(sql);
         String SQL = "delete from certificates where certificate_id=" + id;
         return jdbcTemplateObject.update(SQL) > 0;
     }
 
-    @Override
-    public boolean deleteByName(String name) {
-        String SQL = "delete from certificates where name='" + name + "'";
 
-
-        return jdbcTemplateObject.update(SQL) > 0;
-    }
 
     @Override
     public GiftCertificate update(GiftCertificate certificate) {
-
-
         String sqlQueue = "UPDATE certificates" + " SET";
         LocalDateTime date = LocalDateTime.now();
         sqlQueue += " last_update_date ='" + date + "',";
@@ -111,21 +100,18 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
     public List<GiftCertificate> findByTagName(String tagName) {
         String sqlQueue = FIND_ALL_QUEUE + " where tages.name='" + tagName + "'";
         return jdbcTemplateObject.query(sqlQueue, new GiftMapper());
-
     }
 
     @Override
     public Optional<GiftCertificate> getCertificateById(int id) {
         String sqlQueue = FIND_ALL_QUEUE + " where certificate_id=" + id;
         return Optional.ofNullable(fixToOne(jdbcTemplateObject.query(sqlQueue, new GiftMapper())));
-
     }
 
     @Override
     public GiftCertificate createCertificate(GiftCertificate giftCertificate) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("certificates").usingGeneratedKeyColumns("certificate_id");
-
         Map<String, Object> parameters = new HashMap<>(1);
         parameters.put(CertificateParameters.DESCRIPTION.getMessage(), giftCertificate.getDescription());
         parameters.put(CertificateParameters.DURATION.getMessage(), giftCertificate.getDuration());
@@ -141,10 +127,8 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
     }
 
     private List<GiftCertificate> removeSame(List<GiftCertificate> certificates) {
-
         List<GiftCertificate> result = new ArrayList<>();
         Set<Integer> idList = new HashSet<>();
-
         for (GiftCertificate certificate : certificates) {
             //todo foreach to stream
             if (!idList.contains(certificate.getId())) {
@@ -159,27 +143,30 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
             }
         }
         return result;
-
     }
 
     private GiftCertificate fixToOne(List<GiftCertificate> certificates) {
         if (certificates.size() == 0) {
             return null;
         }
-
         GiftCertificate result = certificates.get(0);
-
-
         for (GiftCertificate certificate : certificates) {
-
             result.addTag(certificate.getTags().get(0));
         }
-
         return result;
     }
-    private void addTags(GiftCertificate giftCertificate){
+
+    private void addTags(GiftCertificate giftCertificate) {
+
         List<Tag> tagList = new ArrayList<>();
+
         if (giftCertificate.getTags().size() != 0) {
+            if (giftCertificate.getTags().get(0) == null) {
+                String deleteCertificatesToTagsSql = "delete from certificates_to_tages where certificate_id=" +
+                        giftCertificate.getId();
+                jdbcTemplateObject.update(deleteCertificatesToTagsSql);
+                return;
+            }
             for (int i = 0; i < giftCertificate.getTags().size(); i++) {
                 String tagSQL = "select * from tages where name='" + giftCertificate.getTags().get(i) + "'";
 
@@ -189,7 +176,8 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
                 }
                 tagList.addAll(jdbcTemplateObject.query(tagSQL, new TagMapper()));
             }
-            String deleteCertificatesToTagsSql="delete from certificates_to_tages where certificate_id="+giftCertificate.getId();
+            String deleteCertificatesToTagsSql = "delete from certificates_to_tages where certificate_id=" +
+                    giftCertificate.getId();
             jdbcTemplateObject.update(deleteCertificatesToTagsSql);
             for (Tag tag : tagList) {
                 String insertToTagsToCertificates = "insert into certificates_to_tages(certificate_id,tag_id) " +

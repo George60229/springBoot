@@ -7,7 +7,6 @@ public enum CertificateParameters {
     NAME("name"),
     CREATE_DATE("create_date");
 
-
     CertificateParameters(String message) {
         this.message = message;
     }

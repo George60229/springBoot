@@ -5,24 +5,21 @@ import com.epam.spm.dto.response.ResponseCertificateDTO;
 import com.epam.spm.model.GiftCertificate;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Component
 public class CertificateConverter {
 
-
     public List<ResponseCertificateDTO> convertListToDTO(List<GiftCertificate> certificates) {
 
-        List<ResponseCertificateDTO> responseCertificateDTOList = new LinkedList<>();
+        List<ResponseCertificateDTO> responseCertificateDTOList = new ArrayList<>(certificates.size());
 
         for (GiftCertificate certificate : certificates) {
             responseCertificateDTOList.add(convertToDTO(certificate));
         }
-        //stream hear
         return responseCertificateDTOList;
-        //controller->service->dao
     }
 
 
@@ -39,7 +36,6 @@ public class CertificateConverter {
         if (certificate.getLastUpdateDate() != null) {
             responseCertificateDTO.setLastUpdateDate(certificate.getLastUpdateDate().toString());
         }
-
         responseCertificateDTO.setPrice(certificate.getPrice());
         return responseCertificateDTO;
     }
@@ -61,13 +57,9 @@ public class CertificateConverter {
         if (giftCertificate.getDuration() == 0) {
             giftCertificate.setDuration(certificateRequestDTO.getDuration());
         }
-        if(certificateRequestDTO.getTags()!=null){
+        if (certificateRequestDTO.getTags() != null) {
             giftCertificate.setTags(certificateRequestDTO.getTags());
         }
         return giftCertificate;
-
-
     }
-
-
 }

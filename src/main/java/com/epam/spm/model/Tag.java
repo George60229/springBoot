@@ -2,12 +2,8 @@ package com.epam.spm.model;
 
 public class Tag {
 
-
     private Integer tag_id;
-
     private String name;
-
-
 
     public int getId() {
         return tag_id;

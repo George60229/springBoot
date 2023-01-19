@@ -12,14 +12,12 @@ import java.util.List;
 
 @Service
 public class TagServiceImpl implements TagService {
+
     @Autowired
     TagDAO tagDAO;
 
     @Autowired
     TagConverter converter;
-
-
-
 
     @Override
     public TagResponseDTO createTag(TagRequestDTO tagDTO) {
@@ -39,5 +37,9 @@ public class TagServiceImpl implements TagService {
     @Override
     public TagResponseDTO getById(int id) {
         return converter.convertOneToDTO(tagDAO.getById(id));
+    }
+
+    public List<TagResponseDTO> getByName(String name) {
+        return converter.convert(tagDAO.getByName(name));
     }
 }

@@ -2,8 +2,6 @@ package com.epam.spm.dao;
 
 import com.epam.spm.dto.request.CertificateFindByDTO;
 import com.epam.spm.model.GiftCertificate;
-import com.epam.spm.utils.SortParameter;
-import com.epam.spm.utils.SortWay;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;

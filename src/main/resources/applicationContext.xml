@@ -20,6 +20,16 @@
         <property name="password" value="174180183"/>
     </bean>
 
+    <bean id="h2Source"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:tcp://localhost/~/test"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="174180183"/>
+    </bean>
+
+
+
 
     <bean id="certificateDAO" class="com.epam.spm.dao.impl.CertificateDAOImpl">
         <constructor-arg ref="dataSource">

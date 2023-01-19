@@ -2,10 +2,7 @@ package com.epam.spm.dto.response;
 
 public class TagResponseDTO {
     private Integer tagId;
-    //shift+f6;
-
     private String name;
-
 
     public Integer getId() {
         return tagId;

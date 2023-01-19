@@ -2,8 +2,6 @@ package com.epam.spm.dto.response;
 
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +13,10 @@ public class ResponseCertificateDTO {
     private BigDecimal price;
     private int duration;
 
-    private String createDate;//default
+    private String createDate;
 
-    private String lastUpdateDate;//default LocalDateTime
-    //change to dateTime in db
+    private String lastUpdateDate;
+
 
     private List<String> tags = new ArrayList<>();
 

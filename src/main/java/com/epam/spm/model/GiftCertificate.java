@@ -1,28 +1,23 @@
 package com.epam.spm.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 
 public class GiftCertificate {
-
 
     private Integer certificateId;
     private String name;
     private String description;
     private BigDecimal price;
     private int duration;
-
     private LocalDateTime createDate;
-
     private LocalDateTime lastUpdateDate;
-
-    private List<String> tags;
-
-
-
+    private List<String> tags=new ArrayList<>();
 
     public Integer getId() {
         return certificateId;
@@ -88,20 +83,16 @@ public class GiftCertificate {
         this.tags = tags;
     }
 
-    public void setTag(String tag_name) {
-        this.tags.add(tag_name);
+    public void setTag(String tagName) {
+        this.tags.add(tagName);
     }
 
-    public void addTag(String tag_name) {
-        if (!tags.contains(tag_name)){
-            this.tags.add(tag_name);
+    public void addTag(String tagName) {
+        if (!tags.contains(tagName)) {
+            this.tags.add(tagName);
         }
 
     }
-    public void removeTag() {
-        this.tags.remove(tags.size()-1);
-    }
-
 
 }
 

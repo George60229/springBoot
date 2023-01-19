@@ -19,12 +19,12 @@ public class AppConfig {
         DataSource dataSource = context.getBean("dataSource", DataSource.class);
         return new CertificateDAOImpl(dataSource);
     }
+
     @Bean
     public TagDAO tagDAO() {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         DataSource dataSource = context.getBean("dataSource", DataSource.class);
         return new TagDAOImpl(dataSource);
     }
-
 
 }

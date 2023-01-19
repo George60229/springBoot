@@ -9,12 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class GiftMapper implements RowMapper<GiftCertificate> {
 
     public GiftCertificate mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-
         GiftCertificate certificate = new GiftCertificate();
         certificate.setId(rs.getInt("certificate_id"));
         certificate.setPrice(BigDecimal.valueOf(rs.getInt("price")));
@@ -30,11 +27,7 @@ public class GiftMapper implements RowMapper<GiftCertificate> {
         }
         if (rs.getDate("last_update_date") != null) {
             certificate.setLastUpdateDate(rs.getTimestamp("last_update_date").toLocalDateTime());
-
         }
-
-
         return certificate;
     }
-
 }

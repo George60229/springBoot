@@ -11,9 +11,7 @@ public class CertificateRequestDTO {
     private BigDecimal price;
     private int duration;
 
-    private List<String> tags=new ArrayList<>();
-
-
+    private List<String> tags = new ArrayList<>();
     //todo request rename
 
     public String getName() {

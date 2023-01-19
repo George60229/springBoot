@@ -18,12 +18,9 @@ public class TagConverter {
             tagResponseDTO.setName(tag.getName());
             tagResponseDTO.setId(tag.getId());
             tagList.add(tagResponseDTO);
-
         }
-
         return tagList;
     }
-
 
     public TagResponseDTO convertOneToDTO(Tag tag) {
         TagResponseDTO tagResponseDTO = new TagResponseDTO();
@@ -31,10 +28,10 @@ public class TagConverter {
         tagResponseDTO.setName(tag.getName());
         return tagResponseDTO;
     }
+
     public Tag convertDTOtoModel(TagRequestDTO tagDTO) {
         Tag tag = new Tag();
         tag.setName(tagDTO.getName());
         return tag;
     }
-
 }

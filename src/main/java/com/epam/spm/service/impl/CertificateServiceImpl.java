@@ -27,10 +27,7 @@ public class CertificateServiceImpl implements CertificateService {
         certificateDAO.deleteById(id);
     }
 
-    @Override
-    public boolean deleteCertificateByName(String name) {
-        return certificateDAO.deleteByName(name);
-    }
+
 
     @Override
     public List<ResponseCertificateDTO> findByTagName(String tagName) {
@@ -41,7 +38,8 @@ public class CertificateServiceImpl implements CertificateService {
     public ResponseCertificateDTO getCertificateById(int id) {
 
         if (certificateDAO.getCertificateById(id).isEmpty()) {
-            throw new AppNotFoundException("Certificate with this id " + id + " is not found", ErrorCode.CERTIFICATE_NOT_FOUND);
+            throw new AppNotFoundException("Certificate with this id " + id + " is not found",
+                    ErrorCode.CERTIFICATE_NOT_FOUND);
         }
         GiftCertificate giftCertificate = certificateDAO.getCertificateById(id).get();
 
@@ -53,7 +51,8 @@ public class CertificateServiceImpl implements CertificateService {
 
         Optional<GiftCertificate> certificate = certificateDAO.getCertificateById(id);
         if (certificate.isEmpty()) {
-            throw new AppNotFoundException("Certificate with this id is not found: " + id, ErrorCode.CERTIFICATE_NOT_FOUND);
+            throw new AppNotFoundException("Certificate with this id is not found: " + id,
+                    ErrorCode.CERTIFICATE_NOT_FOUND);
         }
 
         GiftCertificate giftCertificate = certificate.get();

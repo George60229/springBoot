@@ -16,16 +16,14 @@ import java.util.Map;
 
 public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
 
+
     public TagDAOImpl(DataSource dataSource) {
         setDataSource(dataSource);
     }
 
     public Tag create(Tag tag) {
-
-
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
                 .withTableName("tages").usingGeneratedKeyColumns("tag_id");
-
         Map<String, Object> parameters = new HashMap<>(1);
         parameters.put(CertificateParameters.NAME.getMessage(), tag.getName());
         int newId = (int) simpleJdbcInsert.executeAndReturnKey(parameters);
@@ -33,7 +31,6 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
         result.setName(tag.getName());
         result.setId(newId);
         return result;
-
     }
 
     @Override
@@ -44,14 +41,20 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
 
     @Override
     public Tag getById(int id) {
-        String SQL = "select * from tages where id=" + id;
+        String SQL = "select * from tages where tag_id=" + id;
         return jdbcTemplateObject.queryForObject(SQL, new TagMapper());
     }
 
-
+    @Override
+    public List<Tag> getByName(String name) {
+        String SQL = "select * from tages where name='" + name + "'";
+        return jdbcTemplateObject.query(SQL, new TagMapper());
+    }
 
     @Override
     public boolean deleteById(Integer id) {
+        String sql="delete from certificates_to_tages where tag_id="+id;
+        jdbcTemplateObject.update(sql);
         String SQL = "delete from tages where tag_id=" + id;
         if (jdbcTemplateObject.update(SQL) == 0) {
             throw new AppNotFoundException("Tag with this id " + id + " is not deleted ", ErrorCode.TAG_NOT_FOUND);
@@ -59,12 +62,4 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
         return true;
     }
 
-    @Override
-    public boolean deleteByName(String name) {
-        String SQL = "delete from tages where name='" + name + "'";
-        if (jdbcTemplateObject.update(SQL) == 0) {
-            throw new AppNotFoundException("Tag with this name " + name + " is not deleted ", ErrorCode.TAG_NOT_FOUND);
-        }
-        return true;
-    }
 }

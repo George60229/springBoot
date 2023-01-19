@@ -5,12 +5,9 @@ public class Response {
     private String errorMessage;
     private int errorCode;
 
-    public Response() {
-    }
-
-    public Response(String errorMessage,int errorCode) {
+    public Response(String errorMessage, int errorCode) {
         this.errorMessage = errorMessage;
-        this.errorCode=errorCode;
+        this.errorCode = errorCode;
     }
 
     public String getMessage() {

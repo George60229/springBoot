@@ -5,11 +5,11 @@ import com.epam.spm.utils.SortParameter;
 import com.epam.spm.utils.SortWay;
 
 public class CertificateFindByDTO {
-    private SortWay sortWay=SortWay.ASC;
-    private SortParameter sortParameter=SortParameter.DATE;
+    private SortWay sortWay = SortWay.ASC;
+    private SortParameter sortParameter = SortParameter.DATE;
 
-    private FindParameter findParameter=FindParameter.DEFAULT;
-    private String value="";
+    private FindParameter findParameter = FindParameter.DEFAULT;
+    private String value = "";
 
     public SortWay getSortWay() {
         return sortWay;

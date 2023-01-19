@@ -18,10 +18,8 @@ public class CertificateController {
     @Autowired
     private CertificateService certificateService;
 
-
     @GetMapping("/getCertificateById/{id}")
     public ResponseCertificateDTO getCertificateById(@PathVariable(value = "id") int id) {
-
         return certificateService.getCertificateById(id);
     }
 
@@ -43,8 +41,7 @@ public class CertificateController {
 
     @PatchMapping("/editCertificate/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseCertificateDTO editCertificateById(@PathVariable(value = "id") Integer id,
-                                                      @RequestBody CertificateRequestDTO certificate) {
+    public ResponseCertificateDTO editCertificateById(@PathVariable(value = "id") Integer id, @RequestBody CertificateRequestDTO certificate) {
         return certificateService.editById(id, certificate);
     }
 
@@ -52,6 +49,5 @@ public class CertificateController {
     public List<ResponseCertificateDTO> getByTagName(@PathVariable(value = "tagName") String tagName) {
         return certificateService.findByTagName(tagName);
     }
-
 
 }

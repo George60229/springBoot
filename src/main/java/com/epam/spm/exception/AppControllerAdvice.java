@@ -10,13 +10,14 @@ public class AppControllerAdvice {
 
     @ExceptionHandler(AppNotFoundException.class)
     public ResponseEntity<Response> handleException(AppNotFoundException e) {
-        Response response = new Response(e.getMessage(),e.getErrorCode().getCode());
-        return new ResponseEntity<>(response,ErrorCode.CERTIFICATE_NOT_FOUND.getStatus());
+        Response response = new Response(e.getMessage(), e.getErrorCode().getCode());
+        return new ResponseEntity<>(response, ErrorCode.CERTIFICATE_NOT_FOUND.getStatus());
     }
+
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Response> handleException(BadRequestException e) {
-        Response response = new Response(e.getMessage(),e.getErrorCode().getCode());
-        return new ResponseEntity<>(response,ErrorCode.BAD_REQUEST_ERROR.getStatus());
+        Response response = new Response(e.getMessage(), e.getErrorCode().getCode());
+        return new ResponseEntity<>(response, ErrorCode.BAD_REQUEST_ERROR.getStatus());
     }
 
 }

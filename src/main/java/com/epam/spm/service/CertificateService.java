@@ -11,12 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface CertificateService {
-    /**
-     * get entity by name
-     *
-     * @param name just name
-     * @return list of certificates.
-     */
 
 
     /**
@@ -39,11 +33,10 @@ public interface CertificateService {
     /**
      * delete entity by name
      *
-     * @param name just name
+     * @param tagName just name
      * @return result this operation
      */
 
-    boolean deleteCertificateByName(String name);
 
     List<ResponseCertificateDTO> findByTagName(String tagName);
 
@@ -55,7 +48,6 @@ public interface CertificateService {
      *
      * @return list of certificates.
      */
-
 
 
     /**
@@ -72,8 +64,8 @@ public interface CertificateService {
      */
 
     ResponseCertificateDTO editById(int id, CertificateRequestDTO certificate);
-    ResponseCertificateDTO createCertificate(@RequestBody CertificateRequestDTO certificateDTO);
 
+    ResponseCertificateDTO createCertificate(@RequestBody CertificateRequestDTO certificateDTO);
 
 
 }
