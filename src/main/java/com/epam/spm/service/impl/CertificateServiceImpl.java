@@ -23,8 +23,8 @@ public class CertificateServiceImpl implements CertificateService {
 
 
     @Override
-    public void deleteCertificateById(Integer id) {
-        certificateDAO.deleteById(id);
+    public boolean deleteCertificateById(Integer id) {
+        return certificateDAO.deleteById(id);
     }
 
 
@@ -64,6 +64,12 @@ public class CertificateServiceImpl implements CertificateService {
         return converter.convertToDTO(certificateDAO.createCertificate(converter.convertDTOtoModel(certificateDTO)));
     }
 
+
+    @Override
+    public void setAll(CertificateDAO certificateDAO, CertificateConverter tagConverter) {
+        this.converter=tagConverter;
+        this.certificateDAO=certificateDAO;
+    }
 
     @Override
     public List<ResponseCertificateDTO> listCertificates(CertificateFindByDTO certificateFindByDTO) {

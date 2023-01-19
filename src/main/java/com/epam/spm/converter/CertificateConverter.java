@@ -50,10 +50,20 @@ public class CertificateConverter {
         return giftCertificate;
     }
 
-    public GiftCertificate updateByRequest(GiftCertificate giftCertificate, CertificateRequestDTO certificateRequestDTO) {
-        giftCertificate.setName(Objects.requireNonNullElse(certificateRequestDTO.getName(), giftCertificate.getName()));
-        giftCertificate.setPrice(Objects.requireNonNullElse(certificateRequestDTO.getPrice(), giftCertificate.getPrice()));
-        giftCertificate.setDescription(Objects.requireNonNullElse(certificateRequestDTO.getDescription(), giftCertificate.getDescription()));
+    public GiftCertificate updateByRequest(GiftCertificate giftCertificate,
+                                           CertificateRequestDTO certificateRequestDTO) {
+        if (giftCertificate.getName() != null || certificateRequestDTO.getName() != null) {
+            giftCertificate.setName(Objects.requireNonNullElse(certificateRequestDTO.getName(),
+                    giftCertificate.getName()));
+        }
+        if (giftCertificate.getPrice() != null || certificateRequestDTO.getPrice() != null) {
+            giftCertificate.setPrice(Objects.requireNonNullElse(certificateRequestDTO.getPrice(),
+                    giftCertificate.getPrice()));
+        }
+        if (giftCertificate.getDescription() != null || certificateRequestDTO.getDescription() != null) {
+            giftCertificate.setDescription(Objects.requireNonNullElse(certificateRequestDTO.getDescription(),
+                    giftCertificate.getDescription()));
+        }
         if (giftCertificate.getDuration() == 0) {
             giftCertificate.setDuration(certificateRequestDTO.getDuration());
         }

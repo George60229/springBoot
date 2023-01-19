@@ -40,13 +40,15 @@ public class CertificateDAOImplTest extends ConfigFotTest {
     public void create() {
         GiftCertificate giftCertificate = new GiftCertificate();
         giftCertificate.setName("firstRT");
-        for (int i = 0; i < 10; i++) {
-            certificateDAO.createCertificate(giftCertificate);
-        }
         CertificateFindByDTO certificateFindByDTO=new CertificateFindByDTO();
         certificateFindByDTO.setValue("firstRT");
         certificateFindByDTO.setFindParameter(FindParameter.NAME);
-        Assertions.assertEquals(certificateDAO.listItems(certificateFindByDTO).size(),10);
+        int res=certificateDAO.listItems(certificateFindByDTO).size();
+        for (int i = res; i < res+10; i++) {
+            certificateDAO.createCertificate(giftCertificate);
+        }
+
+        Assertions.assertEquals(certificateDAO.listItems(certificateFindByDTO).size(),res+10);
         Assertions.assertTrue(certificateDAO.deleteById(giftCertificate.getId()));
 
     }

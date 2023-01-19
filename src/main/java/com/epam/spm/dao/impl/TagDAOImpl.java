@@ -56,10 +56,8 @@ public class TagDAOImpl extends EntityDAOImpl implements TagDAO {
         String sql="delete from certificates_to_tages where tag_id="+id;
         jdbcTemplateObject.update(sql);
         String SQL = "delete from tages where tag_id=" + id;
-        if (jdbcTemplateObject.update(SQL) == 0) {
-            throw new AppNotFoundException("Tag with this id " + id + " is not deleted ", ErrorCode.TAG_NOT_FOUND);
-        }
-        return true;
+
+        return jdbcTemplateObject.update(SQL)>0;
     }
 
 }

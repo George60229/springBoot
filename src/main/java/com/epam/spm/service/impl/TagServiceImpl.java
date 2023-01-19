@@ -13,11 +13,19 @@ import java.util.List;
 @Service
 public class TagServiceImpl implements TagService {
 
+
     @Autowired
     TagDAO tagDAO;
 
     @Autowired
     TagConverter converter;
+
+
+    @Override
+    public void setAll(TagDAO tagDAO, TagConverter tagConverter) {
+        this.tagDAO=tagDAO;
+        this.converter=tagConverter;
+    }
 
     @Override
     public TagResponseDTO createTag(TagRequestDTO tagDTO) {
@@ -30,8 +38,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void deleteById(int id) {
-        tagDAO.deleteById(id);
+    public boolean deleteById(int id) {
+        return tagDAO.deleteById(id);
     }
 
     @Override

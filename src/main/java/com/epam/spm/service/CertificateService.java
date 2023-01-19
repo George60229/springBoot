@@ -1,5 +1,9 @@
 package com.epam.spm.service;
 
+import com.epam.spm.converter.CertificateConverter;
+import com.epam.spm.converter.TagConverter;
+import com.epam.spm.dao.CertificateDAO;
+import com.epam.spm.dao.TagDAO;
 import com.epam.spm.dto.request.CertificateFindByDTO;
 import com.epam.spm.dto.request.CertificateRequestDTO;
 import com.epam.spm.dto.response.ResponseCertificateDTO;
@@ -11,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 public interface CertificateService {
+
+    void setAll(CertificateDAO certificateDAO, CertificateConverter tagConverter);
 
 
     /**
@@ -28,7 +34,7 @@ public interface CertificateService {
      * @param id just id
      */
 
-    void deleteCertificateById(Integer id);
+    boolean deleteCertificateById(Integer id);
 
     /**
      * delete entity by name
