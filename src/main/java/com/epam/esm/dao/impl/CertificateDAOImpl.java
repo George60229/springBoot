@@ -49,7 +49,8 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
     public List<GiftCertificate> listItems(CertificateFindByDTO certificateFindByDTO) {
         if (!certificateFindByDTO.getFindParameter().name().equals("DEFAULT")
                 && certificateFindByDTO.getValue().equals("")) {
-            throw new BadRequestException("Value should be not null", ErrorCode.BAD_REQUEST_ERROR);}
+            throw new BadRequestException("Value should be not null", ErrorCode.BAD_REQUEST_ERROR);
+        }
         String sqlQueue;
         if (certificateFindByDTO.getFindParameter().name().equals("DESCRIPTION")) {
             sqlQueue = FIND_ALL_QUEUE + " where certificate_info.description like '%" + certificateFindByDTO.getValue() + "%'";
@@ -97,7 +98,7 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
     @Override
     public List<GiftCertificate> findByTagName(String tagName) {
 
-        return findTags(removeSame(jdbcTemplateObject.query(FIND_ALL_QUEUE, new GiftMapper())),tagName);
+        return findTags(removeSame(jdbcTemplateObject.query(FIND_ALL_QUEUE, new GiftMapper())), tagName);
     }
 
     @Override
@@ -187,7 +188,7 @@ public class CertificateDAOImpl extends EntityDAOImpl implements CertificateDAO 
     private List<GiftCertificate> findTags(List<GiftCertificate> certificateDTOS, String tagName) {
         List<GiftCertificate> result = new ArrayList<>();
         for (GiftCertificate certificateDTO : certificateDTOS) {
-            if(certificateDTO.getTags().contains(tagName)){
+            if (certificateDTO.getTags().contains(tagName)) {
                 result.add(certificateDTO);
             }
         }

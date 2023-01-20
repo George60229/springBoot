@@ -117,7 +117,7 @@ public class CertificateDAOITTest extends ConfigFotTest {
 
         giftCertificate.setName("firstRTUYU");
         giftCertificate.addTag("go");
-        certificateDAO.createCertificate(giftCertificate);
+        Assertions.assertEquals(certificateDAO.createCertificate(giftCertificate).getTags().get(0),"go");
 
 
     }

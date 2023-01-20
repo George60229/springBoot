@@ -16,8 +16,11 @@ import java.util.List;
 @RequestMapping("/certificate")
 public class CertificateController {
 
+
     @Autowired
     private CertificateService certificateService;
+
+
 
     @GetMapping("/{id}")
     public ResponseCertificateDTO getCertificateById(@PathVariable(value = "id") int id) {
@@ -49,6 +52,7 @@ public class CertificateController {
 
     @GetMapping("/findByTagName/{tagName}")
     public List<ResponseCertificateDTO> getByTagName(@PathVariable(value = "tagName") String tagName) {
+
         return certificateService.findByTagName(tagName);
     }
 

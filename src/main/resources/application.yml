@@ -1,9 +1,0 @@
-spring:
-  # Database
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/epam
-    username: postgres
-    password: 174180183
-server:
-  port: 8088 #set your port
