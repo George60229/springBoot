@@ -1,6 +1,6 @@
-import com.epam.spm.dto.response.ResponseCertificateDTO;
-import com.epam.spm.converter.CertificateConverter;
-import com.epam.spm.model.GiftCertificate;
+import com.epam.esm.dto.response.ResponseCertificateDTO;
+import com.epam.esm.converter.CertificateConverter;
+import com.epam.esm.model.GiftCertificate;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;

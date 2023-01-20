@@ -1,7 +1,7 @@
 
-import com.epam.spm.dto.response.ResponseCertificateDTO;
+import com.epam.esm.dto.response.ResponseCertificateDTO;
 
-import com.epam.spm.converter.CertificateConverter;
+import com.epam.esm.converter.CertificateConverter;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -35,13 +35,13 @@ public class TestResponseCertificateDTO {
         expectedResponseCertificateDTO.setDescription("nothing");
         expectedResponseCertificateDTO.setDuration(10);
 
-        com.epam.spm.model.GiftCertificate certificate = new com.epam.spm.model.GiftCertificate();
+        com.epam.esm.model.GiftCertificate certificate = new com.epam.esm.model.GiftCertificate();
         certificate.setId(1);
         certificate.setName("test");
         certificate.setPrice(BigDecimal.valueOf(100));
         certificate.setDescription("nothing");
         certificate.setDuration(10);
-        List<com.epam.spm.model.GiftCertificate> certificates = new ArrayList<>();
+        List<com.epam.esm.model.GiftCertificate> certificates = new ArrayList<>();
         certificates.add(certificate);
         CertificateConverter service = new CertificateConverter();
         List<ResponseCertificateDTO> resDTO = service.convertListToDTO(certificates);
@@ -59,7 +59,7 @@ public class TestResponseCertificateDTO {
 
     @Test
     public void testGetSet() {
-        com.epam.spm.model.GiftCertificate certificate = new com.epam.spm.model.GiftCertificate();
+        com.epam.esm.model.GiftCertificate certificate = new com.epam.esm.model.GiftCertificate();
         certificate.setName("Tested");
         certificate.setDuration(1000);
         certificate.setDescription("It is amazing");

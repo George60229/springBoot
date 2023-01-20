@@ -6,10 +6,11 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
-    <context:component-scan base-package="com.epam.spm">
+    <context:component-scan base-package="com.epam.esm">
 
 
     </context:component-scan>
+    <context:property-placeholder location="classpath:application.yml"/>
 
     <!-- Initialization for data source -->
     <bean id="dataSource"
@@ -31,13 +32,13 @@
 
 
 
-    <bean id="certificateDAO" class="com.epam.spm.dao.impl.CertificateDAOImpl">
+    <bean id="certificateDAO" class="com.epam.esm.dao.impl.CertificateDAOImpl">
         <constructor-arg ref="dataSource">
 
         </constructor-arg>
     </bean>
 
-    <bean id="tagDAO" class="com.epam.spm.dao.impl.TagDAOImpl">
+    <bean id="tagDAO" class="com.epam.esm.dao.impl.TagDAOImpl">
         <constructor-arg ref="dataSource">
 
         </constructor-arg>

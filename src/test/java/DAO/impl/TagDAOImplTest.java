@@ -1,14 +1,12 @@
 package DAO.impl;
 
-import com.epam.spm.dao.TagDAO;
-import com.epam.spm.dao.impl.TagDAOImpl;
-import com.epam.spm.model.GiftCertificate;
-import com.epam.spm.model.Tag;
+import com.epam.esm.dao.TagDAO;
+import com.epam.esm.dao.impl.TagDAOImpl;
+import com.epam.esm.model.Tag;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.sql.DataSource;
+import java.util.Optional;
 
 
 public class TagDAOImplTest extends ConfigFotTest{
@@ -47,7 +45,9 @@ public class TagDAOImplTest extends ConfigFotTest{
         Tag tag = new Tag();
         tag.setName("firstID");
         Tag expected=tagDAO.create(tag);
-        Tag result=tagDAO.getById(expected.getId());
+        Optional<Tag> ex=tagDAO.getById(expected.getId());
+        Assertions.assertFalse(ex.isEmpty());
+        Tag result=ex.get();
         Assertions.assertEquals(result.getName(),expected.getName());
         Assertions.assertEquals(result.getId(),expected.getId());
         Assertions.assertTrue(tagDAO.deleteById(expected.getId()));

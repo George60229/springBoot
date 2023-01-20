@@ -1,6 +1,6 @@
-import com.epam.spm.dto.response.TagResponseDTO;
-import com.epam.spm.model.Tag;
-import com.epam.spm.converter.TagConverter;
+import com.epam.esm.dto.response.TagResponseDTO;
+import com.epam.esm.model.Tag;
+import com.epam.esm.converter.TagConverter;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

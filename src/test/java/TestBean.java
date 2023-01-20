@@ -1,7 +1,7 @@
-import com.epam.spm.dao.CertificateDAO;
-import com.epam.spm.dao.impl.CertificateDAOImpl;
-import com.epam.spm.dao.TagDAO;
-import com.epam.spm.dao.impl.TagDAOImpl;
+import com.epam.esm.dao.CertificateDAO;
+import com.epam.esm.dao.impl.CertificateDAOImpl;
+import com.epam.esm.dao.TagDAO;
+import com.epam.esm.dao.impl.TagDAOImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

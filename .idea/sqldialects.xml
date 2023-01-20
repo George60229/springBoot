@@ -6,8 +6,8 @@
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/2561d0a9-38e3-434b-83b4-9153b8d5d617/console_9.sql" dialect="PostgreSQL" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/fa77e6c6-1f08-40fc-8b62-9f74f5e8624b/console.sql" dialect="H2" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/fa77e6c6-1f08-40fc-8b62-9f74f5e8624b/console_1.sql" dialect="H2" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/epam/spm/dao/impl/CertificateDAOImpl.java" dialect="GenericSQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/epam/spm/dao/impl/TagDAOImpl.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/epam/esm/dao/impl/CertificateDAOImpl.java" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/epam/esm/dao/impl/TagDAOImpl.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/src/main/resources/create.sql" dialect="PostgreSQL" />
   </component>
 </project>
