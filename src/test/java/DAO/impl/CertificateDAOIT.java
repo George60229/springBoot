@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Assertions;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class CertificateDAOITTest extends ConfigFotTest {
+public class CertificateDAOIT extends ConfigFotTest {
 
     CertificateDAO certificateDAO = new CertificateDAOImpl(dataSourceH2);
 

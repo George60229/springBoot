@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import java.util.Optional;
 
 
-public class TagDAOITTest extends ConfigFotTest{
+public class TagDAOIT extends ConfigFotTest{
 
 
     TagDAO tagDAO = new TagDAOImpl(dataSourceH2);

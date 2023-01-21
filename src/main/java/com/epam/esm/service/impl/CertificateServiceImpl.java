@@ -10,10 +10,10 @@ import com.epam.esm.exception.ErrorCode;
 import com.epam.esm.model.GiftCertificate;
 import com.epam.esm.service.CertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CertificateServiceImpl implements CertificateService {
